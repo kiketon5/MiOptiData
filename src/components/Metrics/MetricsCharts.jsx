@@ -329,9 +329,15 @@ const MetricsCharts = () => {
         {/* Visual Acuity Tests */}
         {activeTab === "vision" && (
           <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-lg font-semibold mb-4">
-              Visual Acuity Test Results
-            </h3>
+            <div className="flex justify-between items-center">
+              <h3 className="text-lg font-semibold mb-4">Visual Acuity Test Results</h3>
+              <Link
+              to={`/profiles/${profileId}/visual-test/new`}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors"
+            >
+              Add New Visual Acuity
+            </Link>
+            </div>
 
             {visualTests.length > 0 ? (
               <div className="space-y-6">
@@ -426,9 +432,15 @@ const MetricsCharts = () => {
         {/* Symptoms Pattern */}
         {activeTab === "symptoms" && (
           <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-lg font-semibold mb-4">
-              Symptoms Pattern Analysis
-            </h3>
+            <div className="flex justify-between items-center">
+              <h3 className="text-lg font-semibold mb-4">Symptoms Pattern Analysis</h3>
+              <Link
+              to={`/profiles/${profileId}/symptoms/new`}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors"
+            >
+              Add New Symptoms Pattern
+            </Link>
+            </div>
 
             {symptoms.length > 0 ? (
               <div className="space-y-6">
@@ -571,9 +583,15 @@ const MetricsCharts = () => {
         {/* Eye Pressure */}
         {activeTab === "pressure" && (
           <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-lg font-semibold mb-4">
-              Eye Pressure Measurements
-            </h3>
+            <div className="flex justify-between items-center">
+              <h3 className="text-lg font-semibold mb-4">Eye Pressure Measurements</h3>
+              <Link
+              to={`/profiles/${profileId}/eyepressure/new`}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors"
+            >
+              Add New Eye Pressure
+            </Link>
+            </div>
 
             {pressureMeasurements.length > 0 ? (
               <div className="space-y-6">

@@ -72,6 +72,11 @@ function App() {
               } />
               
               {/* Eye Metrics Routes */}
+              <Route path="/profiles/:profileId/prescriptions" element={
+                <ProtectedRoute>
+                  <PrescriptionHistory />
+                </ProtectedRoute>
+              } />
               <Route path="/profiles/:profileId/prescriptions/new" element={
                 <ProtectedRoute>
                   <PrescriptionForm />
@@ -81,12 +86,7 @@ function App() {
                 <ProtectedRoute>
                   <PrescriptionForm />
                 </ProtectedRoute>
-              } />
-              <Route path="/profiles/:profileId/prescriptions" element={
-                <ProtectedRoute>
-                  <PrescriptionHistory />
-                </ProtectedRoute>
-              } />
+              } />     
               <Route path="/profiles/:profileId/visual-test/new" element={
                 <ProtectedRoute>
                   <VisualAcuityTest />
