@@ -297,7 +297,7 @@ const Dashboard = () => {
                         Metrics
                       </Link>
                       <Link
-                        to={`/profiles/${profile.id}/prescription/new`}
+                        to={`/profiles/${profile.id}/prescriptions`}
                         className="flex items-center px-3 py-1 bg-green-100 hover:bg-green-200 rounded-md text-sm text-green-700"
                       >
                         Prescription
