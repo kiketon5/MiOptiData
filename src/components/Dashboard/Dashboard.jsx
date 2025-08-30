@@ -130,28 +130,37 @@ const Dashboard = () => {
       </div>
       
       {/* Profiles Section */}
-      <div className="bg-white p-6 rounded-lg shadow-md">
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">Your Profiles</h2>
-          <Link to="/profiles" className="text-blue-600 hover:text-blue-800 text-sm font-medium">View All</Link>
-        </div>
-        
-        <div className="text-center py-12">
-          <div className="bg-gray-100 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="bg-white p-6 rounded-lg shadow-md">
+            <>
+              {profiles.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {profiles.map(profile => (
+                    <div key={profile.id} className="border p-4 rounded-lg shadow hover:shadow-md transition">
+                      <h3 className="font-semibold">{profile.name}</h3>
+                      <p className="text-sm text-gray-600">{profile.relationship}</p>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <><div className="text-center py-12">
+                  <div className="bg-gray-100 p-4 rounded-full w-16 h-16 mx-auto mb-4 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
-          </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No profiles yet</h3>
-          <p className="text-gray-500 mb-4">Create your first profile to start tracking eye health metrics</p>
-          <button 
+                  </div>
+                  <h3 className="text-lg font-medium text-gray-900 mb-2">No profiles yet</h3>
+                  <p className="text-gray-500 mb-4">Create your first profile to start tracking eye health metrics</p>
+                   <button 
             onClick={() => navigate('/profiles/new')}
             className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
           >
             Create Your First Profile
           </button>
-        </div>
-      </div>
+                </div></>
+                
+              )}
+            </>
+            </div>
       
       {/* Reminders Section */}
       <div className="bg-white p-6 rounded-lg shadow-md">
