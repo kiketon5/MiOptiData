@@ -11,6 +11,8 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [profileToDelete, setProfileToDelete] = useState(null);
 
   // Real data fetching from Supabase
   useEffect(() => {
@@ -18,6 +20,39 @@ const Dashboard = () => {
       fetchDashboardData();
     }
   }, [user]);
+
+  const openDeleteModal = (profile) => {
+    setProfileToDelete(profile);
+    setIsDeleteModalOpen(true);
+  };
+
+  const closeDeleteModal = () => {
+    setIsDeleteModalOpen(false);
+    setProfileToDelete(null);
+  };
+
+  const confirmDelete = async () => {
+    if (!profileToDelete) return;
+
+    try {
+      const { error } = await supabase
+        .from("app_061iy_profiles")
+        .delete()
+        .eq("id", profileToDelete.id)
+        .eq("user_id", user.id);
+
+      if (error) throw error;
+
+      setProfiles((prevProfiles) =>
+        prevProfiles.filter((profile) => profile.id !== profileToDelete.id)
+      );
+      closeDeleteModal();
+    } catch (err) {
+      console.error("Error deleting profile:", err);
+      setError("Failed to delete profile. Please try again later.");
+      closeDeleteModal();
+    }
+  };
 
   const fetchDashboardData = async () => {
     try {
@@ -431,6 +466,34 @@ const Dashboard = () => {
           </div>
         )}
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {isDeleteModalOpen && profileToDelete && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md">
+            <h3 className="text-xl font-semibold mb-4">Delete Profile</h3>
+            <p className="mb-6">
+              Are you sure you want to delete the profile "
+              {profileToDelete.name}"? This action cannot be undone and all
+              associated eye metrics data will be permanently removed.
+            </p>
+            <div className="flex justify-end space-x-3">
+              <button
+                onClick={closeDeleteModal}
+                className="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={confirmDelete}
+                className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
