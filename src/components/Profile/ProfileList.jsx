@@ -160,7 +160,7 @@ const ProfileList = () => {
                       Metrics
                     </Link>
                     <Link 
-                      to={`/profiles/${profile.id}/prescription/new`}
+                      to={`/profiles/${profile.id}/prescriptions`}
                       className="flex items-center px-3 py-1 bg-green-100 hover:bg-green-200 rounded-md text-sm text-green-700"
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { supabase } from '../../lib/supabase';
 
@@ -182,7 +182,16 @@ const MetricsCharts = () => {
         {/* Prescription Trends */}
         {activeTab === 'prescriptions' && (
           <div className="bg-white rounded-lg shadow-md p-6">
-            <h3 className="text-lg font-semibold mb-4">Prescription Changes Over Time</h3>
+            <div className="flex justify-between items-center">
+              <h3 className="text-lg font-semibold mb-4">Prescription Changes Over Time</h3>
+              <Link
+              to={`/profiles/${profileId}/prescriptions/new`}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors"
+            >
+              Add New Prescription
+            </Link>
+            </div>
+
             
             {prescriptions.length > 0 ? (
               <div className="space-y-6">
