@@ -206,7 +206,7 @@ const Dashboard = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {profiles.map((profile) => (
                 <Link
-                  to={`/profiles/${profile.id}`} // Navega al perfil correspondiente
+                  to={`/profiles/${profile.id}/edit`} // Navega al perfil correspondiente
                   key={profile.id}
                   className="block border p-4 rounded-lg shadow hover:shadow-md transition hover:bg-gray-50"
                 >
@@ -218,7 +218,7 @@ const Dashboard = () => {
                   {/* Opcional: mostrar más info como edad o color de ojos */}
                   {profile.date_of_birth && (
                     <p className="text-xs text-gray-500 mt-1">
-                      DOB:{" "}
+                      Date Of Birth:{" "}
                       {new Date(profile.date_of_birth).toLocaleDateString()}
                     </p>
                   )}
