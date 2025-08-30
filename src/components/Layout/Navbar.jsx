@@ -30,7 +30,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link to="/" className="flex-shrink-0 flex items-center" onClick={closeMenus}>
+            <Link to="/dashboard" className="flex-shrink-0 flex items-center" onClick={closeMenus}>
               <span className="text-2xl font-bold text-blue-600">EyeMetrics</span>
             </Link>
           </div>
