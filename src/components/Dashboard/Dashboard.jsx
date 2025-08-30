@@ -273,7 +273,7 @@ const Dashboard = () => {
                     </p>
                     {profile.date_of_birth && (
                       <p className="text-gray-600 mt-1">
-                        DOB:{" "}
+                        Date of Birth:{" "}
                         {new Date(profile.date_of_birth).toLocaleDateString()}
                       </p>
                     )}
