@@ -6,7 +6,7 @@ const Footer = () => {
       <div className="container mx-auto px-4 py-6">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-4 md:mb-0">
-            <span className="text-lg font-semibold text-blue-600">EyeMetrics</span>
+            <span className="text-lg font-semibold text-blue-600">MiOptiData</span>
             <p className="text-sm text-gray-600 mt-1">Track your eye health easily</p>
           </div>
           
@@ -30,7 +30,7 @@ const Footer = () => {
               <h3 className="text-sm font-semibold text-gray-700 mb-2">Contact</h3>
               <ul className="space-y-2">
                 <li>
-                  <a href="mailto:support@eyemetrics.com" className="text-sm text-gray-600 hover:text-blue-600">support@eyemetrics.com</a>
+                  <a href="mailto:support@MiOptiData.com" className="text-sm text-gray-600 hover:text-blue-600">support@MiOptiData.com</a>
                 </li>
               </ul>
             </div>
@@ -39,7 +39,7 @@ const Footer = () => {
         
         <div className="border-t border-gray-200 mt-6 pt-6 text-center">
           <p className="text-sm text-gray-600">
-            &copy; {new Date().getFullYear()} EyeMetrics. All rights reserved.
+            &copy; {new Date().getFullYear()} MiOptiData. All rights reserved.
           </p>
         </div>
       </div>

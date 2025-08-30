@@ -100,9 +100,9 @@ const AppointmentBooking = () => {
       };
 
       // Store in localStorage for demo
-      const appointments = JSON.parse(localStorage.getItem('eyeMetricsAppointments') || '[]');
+      const appointments = JSON.parse(localStorage.getItem('MiOptiDataAppointments') || '[]');
       appointments.push(appointmentData);
-      localStorage.setItem('eyeMetricsAppointments', JSON.stringify(appointments));
+      localStorage.setItem('MiOptiDataAppointments', JSON.stringify(appointments));
 
       setShowSuccess(true);
       

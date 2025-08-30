@@ -36,7 +36,7 @@ const MedicationTracker = () => {
       setProfiles(profilesData);
       
       // Load medications from localStorage
-      const stored = localStorage.getItem('eyeMetricsMedications');
+      const stored = localStorage.getItem('MiOptiDataMedications');
       const medicationsData = stored ? JSON.parse(stored) : [];
       
       // Mock some medications for demo
@@ -114,7 +114,7 @@ const MedicationTracker = () => {
       
       // Save to localStorage (exclude mock medications)
       const userMedications = updatedMedications.filter(med => !['1', '2'].includes(med.id));
-      localStorage.setItem('eyeMetricsMedications', JSON.stringify(userMedications));
+      localStorage.setItem('MiOptiDataMedications', JSON.stringify(userMedications));
 
       resetForm();
     } catch (error) {
@@ -150,7 +150,7 @@ const MedicationTracker = () => {
       
       // Update localStorage
       const userMedications = updatedMedications.filter(med => !['1', '2'].includes(med.id));
-      localStorage.setItem('eyeMetricsMedications', JSON.stringify(userMedications));
+      localStorage.setItem('MiOptiDataMedications', JSON.stringify(userMedications));
     }
   };
 
@@ -170,7 +170,7 @@ const MedicationTracker = () => {
     
     // Update localStorage
     const userMedications = updatedMedications.filter(med => !['1', '2'].includes(med.id));
-    localStorage.setItem('eyeMetricsMedications', JSON.stringify(userMedications));
+    localStorage.setItem('MiOptiDataMedications', JSON.stringify(userMedications));
   };
 
   const resetForm = () => {

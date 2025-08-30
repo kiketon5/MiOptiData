@@ -82,7 +82,7 @@ const ReminderNotifications = () => {
 
   const showBrowserNotification = (reminder) => {
     if ('Notification' in window && notificationPermission === 'granted') {
-      const title = `EyeMetrics Reminder: ${reminder.title}`;
+      const title = `MiOptiData Reminder: ${reminder.title}`;
       const options = {
         body: `${reminder.description || ''}\n${reminder.reminder_date} ${reminder.reminder_time || ''}`,
         icon: '/favicon.ico',

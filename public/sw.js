@@ -1,4 +1,4 @@
-const CACHE_NAME = 'eyemetrics-v1';
+const CACHE_NAME = 'MiOptiData-v1';
 const urlsToCache = [
   '/',
   '/static/js/bundle.js',

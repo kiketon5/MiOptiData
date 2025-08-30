@@ -11,7 +11,7 @@ const AppointmentsList = () => {
 
   const loadAppointments = () => {
     try {
-      const stored = localStorage.getItem('eyeMetricsAppointments');
+      const stored = localStorage.getItem('MiOptiDataAppointments');
       const appointmentsData = stored ? JSON.parse(stored) : [];
       
       // Mock some additional appointments for demo
@@ -99,7 +99,7 @@ const AppointmentsList = () => {
       
       // Update localStorage
       const userAppointments = updated.filter(apt => !['1', '2'].includes(apt.id));
-      localStorage.setItem('eyeMetricsAppointments', JSON.stringify(userAppointments));
+      localStorage.setItem('MiOptiDataAppointments', JSON.stringify(userAppointments));
     }
   };
 

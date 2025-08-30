@@ -1,5 +1,5 @@
 /**
- * API utility functions for the EyeMetrics application
+ * API utility functions for the MiOptiData application
  * 
  * This module provides functions for interacting with the backend API
  * Note: For this demo, we'll use mock data with localStorage
@@ -11,7 +11,7 @@ const simulateAPIDelay = (ms = 500) => new Promise(resolve => setTimeout(resolve
 // Mock profile data in localStorage
 const initializeMockData = () => {
   // Check if mock data already exists
-  if (!localStorage.getItem('eyeMetricsProfiles')) {
+  if (!localStorage.getItem('MiOptiDataProfiles')) {
     const mockProfiles = [
       {
         id: '1',
@@ -36,10 +36,10 @@ const initializeMockData = () => {
         updatedAt: '2023-01-05T14:30:00Z'
       }
     ];
-    localStorage.setItem('eyeMetricsProfiles', JSON.stringify(mockProfiles));
+    localStorage.setItem('MiOptiDataProfiles', JSON.stringify(mockProfiles));
   }
 
-  if (!localStorage.getItem('eyeMetricsMetrics')) {
+  if (!localStorage.getItem('MiOptiDataMetrics')) {
     const mockMetrics = [
       {
         id: '1',
@@ -105,10 +105,10 @@ const initializeMockData = () => {
         updatedAt: '2023-02-15T10:00:00Z'
       }
     ];
-    localStorage.setItem('eyeMetricsMetrics', JSON.stringify(mockMetrics));
+    localStorage.setItem('MiOptiDataMetrics', JSON.stringify(mockMetrics));
   }
 
-  if (!localStorage.getItem('eyeMetricsReminders')) {
+  if (!localStorage.getItem('MiOptiDataReminders')) {
     const mockReminders = [
       {
         id: '1',
@@ -147,33 +147,33 @@ const initializeMockData = () => {
         updatedAt: '2023-02-15T11:00:00Z'
       }
     ];
-    localStorage.setItem('eyeMetricsReminders', JSON.stringify(mockReminders));
+    localStorage.setItem('MiOptiDataReminders', JSON.stringify(mockReminders));
   }
 
-  if (!localStorage.getItem('eyeMetricsSharedLinks')) {
+  if (!localStorage.getItem('MiOptiDataSharedLinks')) {
     const mockSharedLinks = [];
-    localStorage.setItem('eyeMetricsSharedLinks', JSON.stringify(mockSharedLinks));
+    localStorage.setItem('MiOptiDataSharedLinks', JSON.stringify(mockSharedLinks));
   }
 
   // Initialize new data stores for enhanced features
-  if (!localStorage.getItem('eyeMetricsAppointments')) {
+  if (!localStorage.getItem('MiOptiDataAppointments')) {
     const mockAppointments = [];
-    localStorage.setItem('eyeMetricsAppointments', JSON.stringify(mockAppointments));
+    localStorage.setItem('MiOptiDataAppointments', JSON.stringify(mockAppointments));
   }
 
-  if (!localStorage.getItem('eyeMetricsDoctors')) {
+  if (!localStorage.getItem('MiOptiDataDoctors')) {
     const mockDoctors = [];
-    localStorage.setItem('eyeMetricsDoctors', JSON.stringify(mockDoctors));
+    localStorage.setItem('MiOptiDataDoctors', JSON.stringify(mockDoctors));
   }
 
-  if (!localStorage.getItem('eyeMetricsMedications')) {
+  if (!localStorage.getItem('MiOptiDataMedications')) {
     const mockMedications = [];
-    localStorage.setItem('eyeMetricsMedications', JSON.stringify(mockMedications));
+    localStorage.setItem('MiOptiDataMedications', JSON.stringify(mockMedications));
   }
 
-  if (!localStorage.getItem('eyeMetricsFamilyAccounts')) {
+  if (!localStorage.getItem('MiOptiDataFamilyAccounts')) {
     const mockFamilyAccounts = [];
-    localStorage.setItem('eyeMetricsFamilyAccounts', JSON.stringify(mockFamilyAccounts));
+    localStorage.setItem('MiOptiDataFamilyAccounts', JSON.stringify(mockFamilyAccounts));
   }
 };
 
@@ -184,7 +184,7 @@ initializeMockData();
 export const getAllProfiles = async () => {
   await simulateAPIDelay();
   try {
-    const profiles = JSON.parse(localStorage.getItem('eyeMetricsProfiles') || '[]');
+    const profiles = JSON.parse(localStorage.getItem('MiOptiDataProfiles') || '[]');
     return profiles;
   } catch (error) {
     console.error('Error fetching profiles:', error);
@@ -195,7 +195,7 @@ export const getAllProfiles = async () => {
 export const getProfile = async (profileId) => {
   await simulateAPIDelay();
   try {
-    const profiles = JSON.parse(localStorage.getItem('eyeMetricsProfiles') || '[]');
+    const profiles = JSON.parse(localStorage.getItem('MiOptiDataProfiles') || '[]');
     const profile = profiles.find(p => p.id === profileId);
     
     if (!profile) {
@@ -212,7 +212,7 @@ export const getProfile = async (profileId) => {
 export const createProfile = async (profileData) => {
   await simulateAPIDelay();
   try {
-    const profiles = JSON.parse(localStorage.getItem('eyeMetricsProfiles') || '[]');
+    const profiles = JSON.parse(localStorage.getItem('MiOptiDataProfiles') || '[]');
     
     const newProfile = {
       id: Date.now().toString(),
@@ -223,7 +223,7 @@ export const createProfile = async (profileData) => {
     };
     
     profiles.push(newProfile);
-    localStorage.setItem('eyeMetricsProfiles', JSON.stringify(profiles));
+    localStorage.setItem('MiOptiDataProfiles', JSON.stringify(profiles));
     
     return newProfile;
   } catch (error) {
@@ -235,7 +235,7 @@ export const createProfile = async (profileData) => {
 export const updateProfile = async (profileId, profileData) => {
   await simulateAPIDelay();
   try {
-    const profiles = JSON.parse(localStorage.getItem('eyeMetricsProfiles') || '[]');
+    const profiles = JSON.parse(localStorage.getItem('MiOptiDataProfiles') || '[]');
     const profileIndex = profiles.findIndex(p => p.id === profileId);
     
     if (profileIndex === -1) {
@@ -249,7 +249,7 @@ export const updateProfile = async (profileId, profileData) => {
     };
     
     profiles[profileIndex] = updatedProfile;
-    localStorage.setItem('eyeMetricsProfiles', JSON.stringify(profiles));
+    localStorage.setItem('MiOptiDataProfiles', JSON.stringify(profiles));
     
     return updatedProfile;
   } catch (error) {
@@ -261,20 +261,20 @@ export const updateProfile = async (profileId, profileData) => {
 export const deleteProfile = async (profileId) => {
   await simulateAPIDelay();
   try {
-    const profiles = JSON.parse(localStorage.getItem('eyeMetricsProfiles') || '[]');
+    const profiles = JSON.parse(localStorage.getItem('MiOptiDataProfiles') || '[]');
     const updatedProfiles = profiles.filter(p => p.id !== profileId);
     
-    localStorage.setItem('eyeMetricsProfiles', JSON.stringify(updatedProfiles));
+    localStorage.setItem('MiOptiDataProfiles', JSON.stringify(updatedProfiles));
     
     // Also delete associated metrics for this profile
-    const metrics = JSON.parse(localStorage.getItem('eyeMetricsMetrics') || '[]');
+    const metrics = JSON.parse(localStorage.getItem('MiOptiDataMetrics') || '[]');
     const updatedMetrics = metrics.filter(m => m.profileId !== profileId);
-    localStorage.setItem('eyeMetricsMetrics', JSON.stringify(updatedMetrics));
+    localStorage.setItem('MiOptiDataMetrics', JSON.stringify(updatedMetrics));
     
     // And remove any reminders for this profile
-    const reminders = JSON.parse(localStorage.getItem('eyeMetricsReminders') || '[]');
+    const reminders = JSON.parse(localStorage.getItem('MiOptiDataReminders') || '[]');
     const updatedReminders = reminders.filter(r => r.profileId !== profileId);
-    localStorage.setItem('eyeMetricsReminders', JSON.stringify(updatedReminders));
+    localStorage.setItem('MiOptiDataReminders', JSON.stringify(updatedReminders));
     
     return true;
   } catch (error) {
@@ -287,7 +287,7 @@ export const deleteProfile = async (profileId) => {
 export const getMetrics = async (profileId, metricType = null) => {
   await simulateAPIDelay();
   try {
-    const metrics = JSON.parse(localStorage.getItem('eyeMetricsMetrics') || '[]');
+    const metrics = JSON.parse(localStorage.getItem('MiOptiDataMetrics') || '[]');
     let filteredMetrics = metrics.filter(m => m.profileId === profileId);
     
     if (metricType) {
@@ -304,7 +304,7 @@ export const getMetrics = async (profileId, metricType = null) => {
 export const createMetric = async (profileId, metricType, metricData) => {
   await simulateAPIDelay();
   try {
-    const metrics = JSON.parse(localStorage.getItem('eyeMetricsMetrics') || '[]');
+    const metrics = JSON.parse(localStorage.getItem('MiOptiDataMetrics') || '[]');
     
     const newMetric = {
       id: Date.now().toString(),
@@ -318,7 +318,7 @@ export const createMetric = async (profileId, metricType, metricData) => {
     };
     
     metrics.push(newMetric);
-    localStorage.setItem('eyeMetricsMetrics', JSON.stringify(metrics));
+    localStorage.setItem('MiOptiDataMetrics', JSON.stringify(metrics));
     
     return newMetric;
   } catch (error) {
@@ -330,7 +330,7 @@ export const createMetric = async (profileId, metricType, metricData) => {
 export const updateMetric = async (metricId, metricData) => {
   await simulateAPIDelay();
   try {
-    const metrics = JSON.parse(localStorage.getItem('eyeMetricsMetrics') || '[]');
+    const metrics = JSON.parse(localStorage.getItem('MiOptiDataMetrics') || '[]');
     const metricIndex = metrics.findIndex(m => m.id === metricId);
     
     if (metricIndex === -1) {
@@ -348,7 +348,7 @@ export const updateMetric = async (metricId, metricData) => {
     };
     
     metrics[metricIndex] = updatedMetric;
-    localStorage.setItem('eyeMetricsMetrics', JSON.stringify(metrics));
+    localStorage.setItem('MiOptiDataMetrics', JSON.stringify(metrics));
     
     return updatedMetric;
   } catch (error) {
@@ -360,10 +360,10 @@ export const updateMetric = async (metricId, metricData) => {
 export const deleteMetric = async (metricId) => {
   await simulateAPIDelay();
   try {
-    const metrics = JSON.parse(localStorage.getItem('eyeMetricsMetrics') || '[]');
+    const metrics = JSON.parse(localStorage.getItem('MiOptiDataMetrics') || '[]');
     const updatedMetrics = metrics.filter(m => m.id !== metricId);
     
-    localStorage.setItem('eyeMetricsMetrics', JSON.stringify(updatedMetrics));
+    localStorage.setItem('MiOptiDataMetrics', JSON.stringify(updatedMetrics));
     
     return true;
   } catch (error) {
@@ -376,7 +376,7 @@ export const deleteMetric = async (metricId) => {
 export const getReminders = async (profileId = null) => {
   await simulateAPIDelay();
   try {
-    const reminders = JSON.parse(localStorage.getItem('eyeMetricsReminders') || '[]');
+    const reminders = JSON.parse(localStorage.getItem('MiOptiDataReminders') || '[]');
     
     if (profileId) {
       return reminders.filter(r => r.profileId === profileId);
@@ -392,7 +392,7 @@ export const getReminders = async (profileId = null) => {
 export const getReminder = async (reminderId) => {
   await simulateAPIDelay();
   try {
-    const reminders = JSON.parse(localStorage.getItem('eyeMetricsReminders') || '[]');
+    const reminders = JSON.parse(localStorage.getItem('MiOptiDataReminders') || '[]');
     const reminder = reminders.find(r => r.id === reminderId);
     
     if (!reminder) {
@@ -409,7 +409,7 @@ export const getReminder = async (reminderId) => {
 export const createReminder = async (reminderData) => {
   await simulateAPIDelay();
   try {
-    const reminders = JSON.parse(localStorage.getItem('eyeMetricsReminders') || '[]');
+    const reminders = JSON.parse(localStorage.getItem('MiOptiDataReminders') || '[]');
     
     const newReminder = {
       id: Date.now().toString(),
@@ -421,7 +421,7 @@ export const createReminder = async (reminderData) => {
     };
     
     reminders.push(newReminder);
-    localStorage.setItem('eyeMetricsReminders', JSON.stringify(reminders));
+    localStorage.setItem('MiOptiDataReminders', JSON.stringify(reminders));
     
     return newReminder;
   } catch (error) {
@@ -433,7 +433,7 @@ export const createReminder = async (reminderData) => {
 export const updateReminder = async (reminderId, reminderData) => {
   await simulateAPIDelay();
   try {
-    const reminders = JSON.parse(localStorage.getItem('eyeMetricsReminders') || '[]');
+    const reminders = JSON.parse(localStorage.getItem('MiOptiDataReminders') || '[]');
     const reminderIndex = reminders.findIndex(r => r.id === reminderId);
     
     if (reminderIndex === -1) {
@@ -447,7 +447,7 @@ export const updateReminder = async (reminderId, reminderData) => {
     };
     
     reminders[reminderIndex] = updatedReminder;
-    localStorage.setItem('eyeMetricsReminders', JSON.stringify(reminders));
+    localStorage.setItem('MiOptiDataReminders', JSON.stringify(reminders));
     
     return updatedReminder;
   } catch (error) {
@@ -459,10 +459,10 @@ export const updateReminder = async (reminderId, reminderData) => {
 export const deleteReminder = async (reminderId) => {
   await simulateAPIDelay();
   try {
-    const reminders = JSON.parse(localStorage.getItem('eyeMetricsReminders') || '[]');
+    const reminders = JSON.parse(localStorage.getItem('MiOptiDataReminders') || '[]');
     const updatedReminders = reminders.filter(r => r.id !== reminderId);
     
-    localStorage.setItem('eyeMetricsReminders', JSON.stringify(updatedReminders));
+    localStorage.setItem('MiOptiDataReminders', JSON.stringify(updatedReminders));
     
     return true;
   } catch (error) {
@@ -540,7 +540,7 @@ export const generateShareableLink = async (userId, email, shareType) => {
   return new Promise((resolve) => {
     setTimeout(() => {
       const token = Math.random().toString(36).substring(2, 15);
-      resolve(`https://eyemetrics.app/shared/${token}`);
+      resolve(`https://MiOptiData.app/shared/${token}`);
     }, 300);
   });
 };
@@ -570,7 +570,7 @@ export const exportToCSV = async (userId) => {
 export const createShareLink = async (profileId, dataTypes, expiration = 7) => {
   await simulateAPIDelay();
   try {
-    const sharedLinks = JSON.parse(localStorage.getItem('eyeMetricsSharedLinks') || '[]');
+    const sharedLinks = JSON.parse(localStorage.getItem('MiOptiDataSharedLinks') || '[]');
     
     const token = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
     const expirationDate = new Date();
@@ -590,7 +590,7 @@ export const createShareLink = async (profileId, dataTypes, expiration = 7) => {
     };
     
     sharedLinks.push(newShareLink);
-    localStorage.setItem('eyeMetricsSharedLinks', JSON.stringify(sharedLinks));
+    localStorage.setItem('MiOptiDataSharedLinks', JSON.stringify(sharedLinks));
     
     return {
       ...newShareLink,

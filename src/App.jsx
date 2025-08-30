@@ -10,11 +10,11 @@ import ProfileList from './components/Profile/ProfileList';
 import ProfileForm from './components/Profile/ProfileForm';
 import RemindersList from './components/Reminders/RemindersList';
 import ReminderForm from './components/Reminders/ReminderForm';
-import PrescriptionForm from './components/EyeMetrics/PrescriptionForm';
-import PrescriptionHistory from './components/EyeMetrics/PrescriptionHistory';
-import VisualAcuityTest from './components/EyeMetrics/VisualAcuityTest';
-import SymptomsTracker from './components/EyeMetrics/SymptomsTracker';
-import MetricsCharts from './components/EyeMetrics/MetricsCharts';
+import PrescriptionForm from './components/MiOptiData/PrescriptionForm';
+import PrescriptionHistory from './components/MiOptiData/PrescriptionHistory';
+import VisualAcuityTest from './components/MiOptiData/VisualAcuityTest';
+import SymptomsTracker from './components/MiOptiData/SymptomsTracker';
+import MetricsCharts from './components/MiOptiData/MetricsCharts';
 import ProtectedRoute from './components/Auth/ProtectedRoute';
 
 function App() {

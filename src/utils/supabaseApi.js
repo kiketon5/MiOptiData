@@ -187,7 +187,7 @@ export const deleteProfile = async (profileId) => {
 
 // ============= EYE METRICS MANAGEMENT =============
 
-export const getAllEyeMetrics = async (profileId = null) => {
+export const getAllMiOptiData = async (profileId = null) => {
   try {
     const user = await getCurrentUser()
     let query = supabase

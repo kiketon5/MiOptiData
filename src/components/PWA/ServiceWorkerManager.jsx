@@ -94,7 +94,7 @@ const ServiceWorkerManager = () => {
           <div className="flex items-center justify-between">
             <div>
               <p className="font-medium">Update Available</p>
-              <p className="text-sm opacity-90">A new version of EyeMetrics is ready</p>
+              <p className="text-sm opacity-90">A new version of MiOptiData is ready</p>
             </div>
             <button
               onClick={handleUpdateClick}
@@ -111,7 +111,7 @@ const ServiceWorkerManager = () => {
         <div className="fixed bottom-4 left-4 bg-green-600 text-white p-4 rounded-lg shadow-lg z-50 max-w-sm">
           <div className="flex items-center justify-between">
             <div>
-              <p className="font-medium">Install EyeMetrics</p>
+              <p className="font-medium">Install MiOptiData</p>
               <p className="text-sm opacity-90">Add to home screen for easy access</p>
             </div>
             <div className="flex gap-2 ml-4">

@@ -67,7 +67,7 @@ const BackupRestore = ({ onClose }) => {
       // Create and download backup file
       const jsonString = JSON.stringify(backupData, null, 2);
       const blob = new Blob([jsonString], { type: 'application/json' });
-      const fileName = `eyemetrics-backup-${new Date().toISOString().split('T')[0]}.json`;
+      const fileName = `MiOptiData-backup-${new Date().toISOString().split('T')[0]}.json`;
       saveAs(blob, fileName);
 
       alert('Backup created successfully!');
@@ -328,7 +328,7 @@ const BackupRestore = ({ onClose }) => {
                   <li>• Backup file will be downloaded as JSON format</li>
                   <li>• All selected data will be included with timestamps</li>
                   <li>• Store backup files securely - they contain sensitive health data</li>
-                  <li>• Backups can be restored on any EyeMetrics account</li>
+                  <li>• Backups can be restored on any MiOptiData account</li>
                 </ul>
               </div>
             </div>

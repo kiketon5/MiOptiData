@@ -1,5 +1,5 @@
 /**
- * Validation utility functions for the EyeMetrics application
+ * Validation utility functions for the MiOptiData application
  */
 
 // Validate email format

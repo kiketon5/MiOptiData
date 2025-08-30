@@ -1,5 +1,5 @@
 /**
- * Date utility functions for the EyeMetrics application
+ * Date utility functions for the MiOptiData application
  */
 
 // Format date for display (YYYY-MM-DD format to localized string)

@@ -1,6 +1,6 @@
 {
-  "name": "EyeMetrics - Eye Health Tracker",
-  "short_name": "EyeMetrics",
+  "name": "MiOptiData - Eye Health Tracker",
+  "short_name": "MiOptiData",
   "description": "Track your eye health metrics, prescriptions, and appointments",
   "start_url": "/",
   "display": "standalone",
