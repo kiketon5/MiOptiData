@@ -1,0 +1,46 @@
+{
+  "name": "EyeMetrics - Eye Health Tracker",
+  "short_name": "EyeMetrics",
+  "description": "Track your eye health metrics, prescriptions, and appointments",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#2563eb",
+  "background_color": "#ffffff",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/images/HealthIcon.jpg",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/images/Icon.jpg",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "categories": ["health", "medical", "productivity"],
+  "lang": "en-US",
+  "scope": "/",
+  "shortcuts": [
+    {
+      "name": "Add Prescription",
+      "short_name": "Prescription",
+      "description": "Quickly add a new prescription",
+      "url": "/prescription",
+      "icons": [{ "src": "/favicon.ico", "sizes": "96x96" }]
+    },
+    {
+      "name": "View Analytics",
+      "short_name": "Analytics",
+      "description": "View your eye health analytics",
+      "url": "/analytics",
+      "icons": [{ "src": "/favicon.ico", "sizes": "96x96" }]
+    }
+  ]
+}
