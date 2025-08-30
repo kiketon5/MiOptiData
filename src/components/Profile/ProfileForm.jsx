@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
-import { supabase } from '../../lib/supabase';
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import { supabase } from "../../lib/supabase";
 
 const ProfileForm = () => {
   const { user } = useAuth();
@@ -12,54 +12,54 @@ const ProfileForm = () => {
   // Form state
   const [formData, setFormData] = useState({
     // Basic Information
-    name: '',
-    relationship: 'Self',
-    date_of_birth: '',
-    gender: '',
-    phone: '',
-    
+    name: "",
+    relationship: "Self",
+    date_of_birth: "",
+    gender: "",
+    phone: "",
+
     // Medical Information
-    blood_type: '',
+    blood_type: "",
     allergies: [],
     current_medications: [],
     medical_conditions: [],
-    
+
     // Eye-specific Information
-    eye_color: '',
-    dominant_eye: 'unknown',
+    eye_color: "",
+    dominant_eye: "unknown",
     wears_glasses: false,
     wears_contacts: false,
-    
+
     // Emergency Contact
-    emergency_contact_name: '',
-    emergency_contact_phone: '',
-    emergency_contact_relationship: '',
-    
+    emergency_contact_name: "",
+    emergency_contact_phone: "",
+    emergency_contact_relationship: "",
+
     // Insurance Information
-    insurance_provider: '',
-    insurance_policy_number: '',
-    insurance_group_number: '',
-    
+    insurance_provider: "",
+    insurance_policy_number: "",
+    insurance_group_number: "",
+
     // Healthcare Providers
-    primary_doctor_name: '',
-    primary_doctor_phone: '',
-    ophthalmologist_name: '',
-    ophthalmologist_phone: '',
-    optometrist_name: '',
-    optometrist_phone: '',
-    
+    primary_doctor_name: "",
+    primary_doctor_phone: "",
+    ophthalmologist_name: "",
+    ophthalmologist_phone: "",
+    optometrist_name: "",
+    optometrist_phone: "",
+
     // Additional Notes
-    notes: ''
+    notes: "",
   });
 
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [activeTab, setActiveTab] = useState('basic');
+  const [error, setError] = useState("");
+  const [activeTab, setActiveTab] = useState("basic");
 
   // Temporary arrays for adding items
-  const [newAllergy, setNewAllergy] = useState('');
-  const [newMedication, setNewMedication] = useState('');
-  const [newCondition, setNewCondition] = useState('');
+  const [newAllergy, setNewAllergy] = useState("");
+  const [newMedication, setNewMedication] = useState("");
+  const [newCondition, setNewCondition] = useState("");
 
   // Load existing profile if editing
   useEffect(() => {
@@ -72,10 +72,10 @@ const ProfileForm = () => {
     try {
       setLoading(true);
       const { data, error } = await supabase
-        .from('app_061iy_profiles')
-        .select('*')
-        .eq('id', profileId)
-        .eq('user_id', user.id)
+        .from("app_061iy_profiles")
+        .select("*")
+        .eq("id", profileId)
+        .eq("user_id", user.id)
         .single();
 
       if (error) throw error;
@@ -83,15 +83,19 @@ const ProfileForm = () => {
       if (data) {
         setFormData({
           ...data,
-          date_of_birth: data.date_of_birth || '',
-          allergies: data.allergies || [],
-          current_medications: data.current_medications || [],
-          medical_conditions: data.medical_conditions || []
+          date_of_birth: data.date_of_birth || "",
+          allergies: Array.isArray(data.allergies) ? data.allergies : [],
+          current_medications: Array.isArray(data.current_medications)
+            ? data.current_medications
+            : [],
+          medical_conditions: Array.isArray(data.medical_conditions)
+            ? data.medical_conditions
+            : [],
         });
       }
     } catch (error) {
-      console.error('Error loading profile:', error);
-      setError('Failed to load profile data');
+      console.error("Error loading profile:", error);
+      setError("Failed to load profile data");
     } finally {
       setLoading(false);
     }
@@ -99,74 +103,74 @@ const ProfileForm = () => {
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
   const addArrayItem = (arrayName, item, setterFunction) => {
     if (item.trim()) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        [arrayName]: [...prev[arrayName], item.trim()]
+        [arrayName]: [...prev[arrayName], item.trim()],
       }));
-      setterFunction('');
+      setterFunction("");
     }
   };
 
   const removeArrayItem = (arrayName, index) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [arrayName]: prev[arrayName].filter((_, i) => i !== index)
+      [arrayName]: prev[arrayName].filter((_, i) => i !== index),
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
 
     try {
       const profileData = {
         ...formData,
         user_id: user.id,
-        date_of_birth: formData.date_of_birth || null
+        date_of_birth: formData.date_of_birth || null,
       };
 
       if (isEditing) {
         const { error } = await supabase
-          .from('app_061iy_profiles')
+          .from("app_061iy_profiles")
           .update(profileData)
-          .eq('id', profileId)
-          .eq('user_id', user.id);
+          .eq("id", profileId)
+          .eq("user_id", user.id);
 
         if (error) throw error;
       } else {
         const { error } = await supabase
-          .from('app_061iy_profiles')
+          .from("app_061iy_profiles")
           .insert([profileData]);
 
         if (error) throw error;
       }
 
-      navigate('/profiles');
+      navigate("/profiles");
     } catch (error) {
-      console.error('Error saving profile:', error);
-      setError('Failed to save profile. Please try again.');
+      console.error("Error saving profile:", error);
+      setError("Failed to save profile. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   const tabs = [
-    { id: 'basic', label: 'Basic Info', icon: '👤' },
-    { id: 'medical', label: 'Medical Info', icon: '🏥' },
-    { id: 'eye', label: 'Eye Health', icon: '👁️' },
-    { id: 'contacts', label: 'Contacts', icon: '📞' },
-    { id: 'insurance', label: 'Insurance', icon: '🏛️' },
-    { id: 'providers', label: 'Doctors', icon: '👨‍⚕️' },
-    { id: 'notes', label: 'Notes', icon: '📝' }
+    { id: "basic", label: "Basic Info", icon: "👤" },
+    { id: "medical", label: "Medical Info", icon: "🏥" },
+    { id: "eye", label: "Eye Health", icon: "👁️" },
+    { id: "contacts", label: "Contacts", icon: "📞" },
+    { id: "insurance", label: "Insurance", icon: "🏛️" },
+    { id: "providers", label: "Doctors", icon: "👨‍⚕️" },
+    { id: "notes", label: "Notes", icon: "📝" },
   ];
 
   if (loading && isEditing) {
@@ -183,10 +187,12 @@ const ProfileForm = () => {
         {/* Header */}
         <div className="px-6 py-4 border-b border-gray-200">
           <h1 className="text-2xl font-bold text-gray-900">
-            {isEditing ? 'Edit Profile' : 'Create New Profile'}
+            {isEditing ? "Edit Profile" : "Create New Profile"}
           </h1>
           <p className="text-gray-600 mt-1">
-            {isEditing ? 'Update profile information' : 'Add a new profile to track eye health metrics'}
+            {isEditing
+              ? "Update profile information"
+              : "Add a new profile to track eye health metrics"}
           </p>
         </div>
 
@@ -199,8 +205,8 @@ const ProfileForm = () => {
                 onClick={() => setActiveTab(tab.id)}
                 className={`${
                   activeTab === tab.id
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    ? "border-blue-500 text-blue-600"
+                    : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
                 } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center space-x-2`}
               >
                 <span>{tab.icon}</span>
@@ -219,7 +225,7 @@ const ProfileForm = () => {
           )}
 
           {/* Basic Information Tab */}
-          {activeTab === 'basic' && (
+          {activeTab === "basic" && (
             <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
@@ -306,7 +312,7 @@ const ProfileForm = () => {
           )}
 
           {/* Medical Information Tab */}
-          {activeTab === 'medical' && (
+          {activeTab === "medical" && (
             <div className="space-y-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -343,22 +349,24 @@ const ProfileForm = () => {
                     className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Add an allergy"
                     onKeyPress={(e) => {
-                      if (e.key === 'Enter') {
+                      if (e.key === "Enter") {
                         e.preventDefault();
-                        addArrayItem('allergies', newAllergy, setNewAllergy);
+                        addArrayItem("allergies", newAllergy, setNewAllergy);
                       }
                     }}
                   />
                   <button
                     type="button"
-                    onClick={() => addArrayItem('allergies', newAllergy, setNewAllergy)}
+                    onClick={() =>
+                      addArrayItem("allergies", newAllergy, setNewAllergy)
+                    }
                     className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
                   >
                     Add
                   </button>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  {formData.allergies.map((allergy, index) => (
+                  {Array.isArray(formData.allergies) && formData.allergies.map((allergy, index) => (
                     <span
                       key={index}
                       className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-red-100 text-red-800"
@@ -366,7 +374,7 @@ const ProfileForm = () => {
                       {allergy}
                       <button
                         type="button"
-                        onClick={() => removeArrayItem('allergies', index)}
+                        onClick={() => removeArrayItem("allergies", index)}
                         className="ml-2 text-red-600 hover:text-red-800"
                       >
                         ×
@@ -389,15 +397,25 @@ const ProfileForm = () => {
                     className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Add a medication"
                     onKeyPress={(e) => {
-                      if (e.key === 'Enter') {
+                      if (e.key === "Enter") {
                         e.preventDefault();
-                        addArrayItem('current_medications', newMedication, setNewMedication);
+                        addArrayItem(
+                          "current_medications",
+                          newMedication,
+                          setNewMedication
+                        );
                       }
                     }}
                   />
                   <button
                     type="button"
-                    onClick={() => addArrayItem('current_medications', newMedication, setNewMedication)}
+                    onClick={() =>
+                      addArrayItem(
+                        "current_medications",
+                        newMedication,
+                        setNewMedication
+                      )
+                    }
                     className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
                   >
                     Add
@@ -412,7 +430,9 @@ const ProfileForm = () => {
                       {medication}
                       <button
                         type="button"
-                        onClick={() => removeArrayItem('current_medications', index)}
+                        onClick={() =>
+                          removeArrayItem("current_medications", index)
+                        }
                         className="ml-2 text-blue-600 hover:text-blue-800"
                       >
                         ×
@@ -435,15 +455,25 @@ const ProfileForm = () => {
                     className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Add a medical condition"
                     onKeyPress={(e) => {
-                      if (e.key === 'Enter') {
+                      if (e.key === "Enter") {
                         e.preventDefault();
-                        addArrayItem('medical_conditions', newCondition, setNewCondition);
+                        addArrayItem(
+                          "medical_conditions",
+                          newCondition,
+                          setNewCondition
+                        );
                       }
                     }}
                   />
                   <button
                     type="button"
-                    onClick={() => addArrayItem('medical_conditions', newCondition, setNewCondition)}
+                    onClick={() =>
+                      addArrayItem(
+                        "medical_conditions",
+                        newCondition,
+                        setNewCondition
+                      )
+                    }
                     className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
                   >
                     Add
@@ -458,7 +488,9 @@ const ProfileForm = () => {
                       {condition}
                       <button
                         type="button"
-                        onClick={() => removeArrayItem('medical_conditions', index)}
+                        onClick={() =>
+                          removeArrayItem("medical_conditions", index)
+                        }
                         className="ml-2 text-yellow-600 hover:text-yellow-800"
                       >
                         ×
@@ -471,7 +503,7 @@ const ProfileForm = () => {
           )}
 
           {/* Eye Health Tab */}
-          {activeTab === 'eye' && (
+          {activeTab === "eye" && (
             <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
@@ -543,7 +575,7 @@ const ProfileForm = () => {
           )}
 
           {/* Emergency Contacts Tab */}
-          {activeTab === 'contacts' && (
+          {activeTab === "contacts" && (
             <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
@@ -592,7 +624,7 @@ const ProfileForm = () => {
           )}
 
           {/* Insurance Tab */}
-          {activeTab === 'insurance' && (
+          {activeTab === "insurance" && (
             <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="md:col-span-2">
@@ -641,7 +673,7 @@ const ProfileForm = () => {
           )}
 
           {/* Healthcare Providers Tab */}
-          {activeTab === 'providers' && (
+          {activeTab === "providers" && (
             <div className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
@@ -732,7 +764,7 @@ const ProfileForm = () => {
           )}
 
           {/* Notes Tab */}
-          {activeTab === 'notes' && (
+          {activeTab === "notes" && (
             <div className="space-y-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -754,18 +786,22 @@ const ProfileForm = () => {
           <div className="flex justify-between items-center pt-6 border-t border-gray-200 mt-8">
             <button
               type="button"
-              onClick={() => navigate('/profiles')}
+              onClick={() => navigate("/profiles")}
               className="px-4 py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors"
             >
               Cancel
             </button>
-            
+
             <button
               type="submit"
               disabled={loading}
               className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
-              {loading ? 'Saving...' : (isEditing ? 'Update Profile' : 'Create Profile')}
+              {loading
+                ? "Saving..."
+                : isEditing
+                ? "Update Profile"
+                : "Create Profile"}
             </button>
           </div>
         </form>
