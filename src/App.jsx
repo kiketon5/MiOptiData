@@ -16,6 +16,7 @@ import VisualAcuityTest from './components/Metrics/VisualAcuityTest';
 import SymptomsTracker from './components/Metrics/SymptomsTracker';
 import MetricsCharts from './components/Metrics/MetricsCharts';
 import ProtectedRoute from './components/Auth/ProtectedRoute';
+import EyePressureForm from './components/Metrics/PressureTracker';
 
 function App() {
   return (
@@ -105,6 +106,11 @@ function App() {
               <Route path="/profiles/:profileId/symptoms/:symptomId/edit" element={
                 <ProtectedRoute>
                   <SymptomsTracker />
+                </ProtectedRoute>
+              } />
+               <Route path="/profiles/:profileId/eye-pressure/new" element={
+                <ProtectedRoute>
+                  <EyePressureForm />
                 </ProtectedRoute>
               } />
               <Route path="/profiles/:profileId/metrics" element={
