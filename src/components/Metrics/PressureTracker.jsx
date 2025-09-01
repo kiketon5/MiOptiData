@@ -52,7 +52,7 @@ const EyePressureForm = () => {
     try {
       setLoading(true);
       const { data, error } = await supabase
-        .from('app_061iy_eye_pressure')
+        .from('app_061iy_pressure_measurements')
         .select('*')
         .eq('id', recordId)
         .eq('user_id', user.id)
@@ -94,14 +94,14 @@ const EyePressureForm = () => {
 
       if (isEditing) {
         const { error } = await supabase
-          .from('app_061iy_eye_pressure')
+          .from('app_061iy_pressure_measurements')
           .update(recordData)
           .eq('id', recordId)
           .eq('user_id', user.id);
         if (error) throw error;
       } else {
         const { error } = await supabase
-          .from('app_061iy_eye_pressure')
+          .from('app_061iy_pressure_measurements')
           .insert([recordData]);
         if (error) throw error;
       }
