@@ -3,8 +3,10 @@ import { useAuth } from '../../context/AuthContext';
 import { supabase } from '../../lib/supabase';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { useParams } from 'react-router-dom';
 
-const PDFExport = ({ profileId, onClose }) => {
+const PDFExport = ({ onClose }) => {
+  const { profileId } = useParams;
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [reportType, setReportType] = useState('complete');
