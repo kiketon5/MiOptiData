@@ -6,9 +6,8 @@ const ProtectedRoute = ({ children }) => {
   const { user, loading } = useAuth();
 
   // Mientras se comprueba el estado de autenticación
-  if (loading) {
-    return <div className="text-center py-8">Cargando...</div>;
-  }
+  if (loading) return <p className="text-center py-8 text-gray-500">Cargando sesión...</p>;
+
 
   // Si no hay usuario → redirige a login
   if (!user) {

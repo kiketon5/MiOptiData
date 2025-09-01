@@ -41,6 +41,7 @@ export const AuthProvider = ({ children }) => {
           setUser(session.user);
         } else {
           setUser(null);
+          setSession(null);
         }
         
         setLoading(false);
