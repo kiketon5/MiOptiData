@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
-import { supabase } from '../../lib/supabase';
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import { supabase } from "../../lib/supabase";
 
 const EyePressureForm = () => {
   const { user } = useAuth();
@@ -10,20 +10,23 @@ const EyePressureForm = () => {
   const isEditing = !!recordId;
 
   const [formData, setFormData] = useState({
-    profile_id: profileId || '',
-    measurement_date: new Date().toISOString().split('T')[0],
-    measurement_time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-    od_pressure: '',
-    os_pressure: '',
-    measurement_method: '',
-    measured_by: '',
-    location: '',
-    notes: ''
+    profile_id: profileId || "",
+    measurement_date: new Date().toISOString().split("T")[0],
+    measurement_time: new Date().toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    }),
+    od_pressure: "",
+    os_pressure: "",
+    measurement_method: "",
+    measured_by: "",
+    location: "",
+    notes: "",
   });
 
   const [profiles, setProfiles] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (user) {
@@ -37,14 +40,14 @@ const EyePressureForm = () => {
   const loadProfiles = async () => {
     try {
       const { data, error } = await supabase
-        .from('app_061iy_profiles')
-        .select('id, name, relationship')
-        .eq('user_id', user.id)
-        .order('name');
+        .from("app_061iy_profiles")
+        .select("id, name, relationship")
+        .eq("user_id", user.id)
+        .order("name");
       if (error) throw error;
       setProfiles(data || []);
     } catch (error) {
-      console.error('Error loading profiles:', error);
+      console.error("Error loading profiles:", error);
     }
   };
 
@@ -52,22 +55,22 @@ const EyePressureForm = () => {
     try {
       setLoading(true);
       const { data, error } = await supabase
-        .from('app_061iy_pressure_measurements')
-        .select('*')
-        .eq('id', recordId)
-        .eq('user_id', user.id)
+        .from("app_061iy_pressure_measurements")
+        .select("*")
+        .eq("id", recordId)
+        .eq("user_id", user.id)
         .single();
       if (error) throw error;
       if (data) {
         setFormData({
           ...data,
-          measurement_date: data.measurement_date || '',
-          measurement_time: data.measurement_time || ''
+          measurement_date: data.measurement_date || "",
+          measurement_time: data.measurement_time || "",
         });
       }
     } catch (error) {
-      console.error('Error loading record:', error);
-      setError('Failed to load eye pressure record');
+      console.error("Error loading record:", error);
+      setError("Failed to load eye pressure record");
     } finally {
       setLoading(false);
     }
@@ -75,41 +78,45 @@ const EyePressureForm = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
+    setError("");
 
     try {
       const recordData = {
         ...formData,
         user_id: user.id,
         profile_id: formData.profile_id,
-        od_pressure: formData.od_pressure ? parseFloat(formData.od_pressure) : null,
-        os_pressure: formData.os_pressure ? parseFloat(formData.os_pressure) : null
+        od_pressure: formData.od_pressure
+          ? parseFloat(formData.od_pressure)
+          : null,
+        os_pressure: formData.os_pressure
+          ? parseFloat(formData.os_pressure)
+          : null,
       };
 
       if (isEditing) {
         const { error } = await supabase
-          .from('app_061iy_pressure_measurements')
+          .from("app_061iy_pressure_measurements")
           .update(recordData)
-          .eq('id', recordId)
-          .eq('user_id', user.id);
+          .eq("id", recordId)
+          .eq("user_id", user.id);
         if (error) throw error;
       } else {
         const { error } = await supabase
-          .from('app_061iy_pressure_measurements')
+          .from("app_061iy_pressure_measurements")
           .insert([recordData]);
         if (error) throw error;
       }
 
       navigate(`/profiles/${formData.profile_id}/metrics`);
     } catch (error) {
-      console.error('Error saving eye pressure record:', error);
-      setError('Failed to save record. Please try again.');
+      console.error("Error saving eye pressure record:", error);
+      setError("Failed to save record. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -128,9 +135,13 @@ const EyePressureForm = () => {
       <div className="bg-white rounded-lg shadow-md">
         <div className="px-6 py-4 border-b border-gray-200">
           <h1 className="text-2xl font-bold text-gray-900">
-            {isEditing ? 'Edit Eye Pressure Record' : 'Add Eye Pressure Measurement'}
+            {isEditing
+              ? "Edit Eye Pressure Record"
+              : "Add Eye Pressure Measurement"}
           </h1>
-          <p className="text-gray-600 mt-1">Track intraocular pressure for your profile</p>
+          <p className="text-gray-600 mt-1">
+            Track intraocular pressure for your profile
+          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-6">
@@ -141,10 +152,14 @@ const EyePressureForm = () => {
           )}
 
           <div className="space-y-4">
-            <h3 className="text-lg font-medium text-gray-900">Basic Information</h3>
+            <h3 className="text-lg font-medium text-gray-900">
+              Basic Information
+            </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Profile *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Profile *
+                </label>
                 <select
                   name="profile_id"
                   value={formData.profile_id}
@@ -153,7 +168,7 @@ const EyePressureForm = () => {
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="">Select a profile</option>
-                  {profiles.map(profile => (
+                  {profiles.map((profile) => (
                     <option key={profile.id} value={profile.id}>
                       {profile.name} ({profile.relationship})
                     </option>
@@ -162,7 +177,9 @@ const EyePressureForm = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Date *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Date *
+                </label>
                 <input
                   type="date"
                   name="measurement_date"
@@ -174,7 +191,9 @@ const EyePressureForm = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Time *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Time *
+                </label>
                 <input
                   type="time"
                   name="measurement_time"
@@ -186,7 +205,9 @@ const EyePressureForm = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Location
+                </label>
                 <input
                   type="text"
                   name="location"
@@ -200,10 +221,14 @@ const EyePressureForm = () => {
           </div>
 
           <div className="space-y-4">
-            <h3 className="text-lg font-medium text-gray-900">Pressure Measurements (mmHg)</h3>
+            <h3 className="text-lg font-medium text-gray-900">
+              Pressure Measurements (mmHg)
+            </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Right Eye (OD) *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Right Eye (OD) *
+                </label>
                 <input
                   type="number"
                   name="od_pressure"
@@ -216,7 +241,9 @@ const EyePressureForm = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Left Eye (OS) *</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Left Eye (OS) *
+                </label>
                 <input
                   type="number"
                   name="os_pressure"
@@ -231,19 +258,28 @@ const EyePressureForm = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Measurement Method</label>
-                <input
-                  type="text"
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Measurement Method *
+                </label>
+                <select
                   name="measurement_method"
                   value={formData.measurement_method}
                   onChange={handleInputChange}
+                  required
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="e.g., Tonometry, Non-contact"
-                />
+                >
+                  <option value="">Select a method</option>
+                  <option value="tonometry">Tonometry</option>
+                  <option value="goldmann">Goldmann</option>
+                  <option value="air_puff">Air Puff</option>
+                  <option value="other">Other</option>
+                </select>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Measured By</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Measured By
+                </label>
                 <input
                   type="text"
                   name="measured_by"
@@ -256,7 +292,9 @@ const EyePressureForm = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Notes</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Notes
+              </label>
               <textarea
                 name="notes"
                 value={formData.notes}
@@ -282,7 +320,11 @@ const EyePressureForm = () => {
               disabled={loading}
               className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
-              {loading ? 'Saving...' : isEditing ? 'Update Record' : 'Save Record'}
+              {loading
+                ? "Saving..."
+                : isEditing
+                ? "Update Record"
+                : "Save Record"}
             </button>
           </div>
         </form>
