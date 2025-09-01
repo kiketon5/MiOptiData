@@ -17,6 +17,7 @@ import SymptomsTracker from './components/Metrics/SymptomsTracker';
 import MetricsCharts from './components/Metrics/MetricsCharts';
 import ProtectedRoute from './components/Auth/ProtectedRoute';
 import EyePressureForm from './components/Metrics/PressureTracker';
+import PDFExport from './components/Sharing/PDFExport';
 
 function App() {
   return (
@@ -116,6 +117,12 @@ function App() {
               <Route path="/profiles/:profileId/metrics" element={
                 <ProtectedRoute>
                   <MetricsCharts />
+                </ProtectedRoute>
+              } />
+
+              <Route path="/profiles/:profileId/share" element={
+                <ProtectedRoute>
+                  <PDFExport />
                 </ProtectedRoute>
               } />
               
