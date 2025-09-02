@@ -53,7 +53,7 @@ const PDFExport = ({ onClose }) => {
       pdf.setFontSize(14);
       pdf.setFont(undefined, 'bold');
       pdf.text('Patient Information', 20, yPosition + 5);
-      // yPosition += 10;
+      yPosition += 15;
 
       pdf.setFontSize(12);
       pdf.setFont(undefined, 'normal');
