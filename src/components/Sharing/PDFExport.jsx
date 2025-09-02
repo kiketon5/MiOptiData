@@ -58,7 +58,7 @@ const PDFExport = ({ onClose }) => {
 
 
       pdf.setTextColor(30, 144, 255);
-      pdf.setFontSize(20);
+      pdf.setFontSize(26);
       pdf.setFont(undefined, "bold");
       pdf.text("REPORT", pageWidth / 2, 15, { align: "center" });
       pdf.setTextColor(0, 0, 0);
