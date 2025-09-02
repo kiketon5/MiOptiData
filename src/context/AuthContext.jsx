@@ -1,55 +1,63 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 import { supabase } from '../lib/supabase';
-import { signUp, signIn, signOut, getCurrentUser, signInWithGoogle, ensureUserProfile } from '../utils/supabaseApi';
+import {
+  signUp,
+  signIn,
+  signOut,
+  signInWithGoogle,
+  ensureUserProfile
+} from '../utils/supabaseApi';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [session, setSession] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Get initial session
-    const getInitialSession = async () => {
+    const initializeAuth = async () => {
       try {
         const { data, error } = await supabase.auth.getSession();
-        const session = data?.session;
-        if (error) throw error;
-        
-        setSession(session);
+        const currentSession = data?.session;
 
-        if (session?.user) {
-          setUser(session.user);
+        if (error) throw error;
+
+        setSession(currentSession);
+
+        if (currentSession?.user) {
+          setUser(currentSession.user);
         } else {
           setUser(null);
         }
-      } catch (error) {
-        console.error('Error getting session:', error);
+      } catch (err) {
+        console.error('Error al obtener la sesión inicial:', err);
+        setUser(null);
+        setSession(null);
       } finally {
-        console.log("Finalizando carga. Sesión:", session);
-
         setLoading(false);
       }
     };
 
-    getInitialSession();
+    initializeAuth();
 
-    // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        console.log('Auth state changed:', event, session);
-        setSession(session);
-        
-        if (session?.user) {
-          // Ensure user profile exists for social login users
-          await ensureUserProfile(session.user);
-          setUser(session.user);
+      async (event, newSession) => {
+        console.log('Cambio de estado de autenticación:', event, newSession);
+        setSession(newSession);
+
+        if (newSession?.user) {
+          try {
+            await ensureUserProfile(newSession.user);
+          } catch (err) {
+            console.warn('Error en ensureUserProfile:', err);
+          }
+          setUser(newSession.user);
         } else {
           setUser(null);
           setSession(null);
         }
-        
+
         setLoading(false);
       }
     );
@@ -57,54 +65,55 @@ export const AuthProvider = ({ children }) => {
     return () => subscription.unsubscribe();
   }, []);
 
+  // Métodos de autenticación
   const login = async (email, password) => {
+    setLoading(true);
     try {
-      setLoading(true);
       const data = await signIn(email, password);
       return data;
-    } catch (error) {
-      console.error('Login error:', error);
-      throw error;
+    } catch (err) {
+      console.error('Error al iniciar sesión:', err);
+      throw err;
     } finally {
       setLoading(false);
     }
   };
 
   const register = async (email, password, userData = {}) => {
+    setLoading(true);
     try {
-      setLoading(true);
       const data = await signUp(email, password, userData);
       return data;
-    } catch (error) {
-      console.error('Registration error:', error);
-      throw error;
+    } catch (err) {
+      console.error('Error al registrarse:', err);
+      throw err;
     } finally {
       setLoading(false);
     }
   };
 
   const loginWithGoogle = async () => {
+    setLoading(true);
     try {
-      setLoading(true);
       const data = await signInWithGoogle();
       return data;
-    } catch (error) {
-      console.error('Google login error:', error);
-      throw error;
+    } catch (err) {
+      console.error('Error al iniciar sesión con Google:', err);
+      throw err;
     } finally {
       setLoading(false);
     }
   };
 
-
-
   const logout = async () => {
+    setLoading(true);
     try {
-      setLoading(true);
       await signOut();
-    } catch (error) {
-      console.error('Logout error:', error);
-      throw error;
+      setUser(null);
+      setSession(null);
+    } catch (err) {
+      console.error('Error al cerrar sesión:', err);
+      throw err;
     } finally {
       setLoading(false);
     }
@@ -128,13 +137,11 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-export { AuthContext };
-
-// Custom hook to use the auth context
+// Custom hook
 export const useAuth = () => {
-  const context = React.useContext(AuthContext);
+  const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error('useAuth debe usarse dentro de un AuthProvider');
   }
   return context;
 };
