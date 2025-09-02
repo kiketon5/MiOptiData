@@ -147,7 +147,7 @@ const PDFExport = ({ onClose }) => {
         ];
 
         drawTable(pdf, tableData, 20, yPosition, pageWidth - 40);
-        yPosition += (tableData.length * 8) + 15;
+        yPosition += (tableData.length * 8) + 5;
       }
 
       // Check if new page needed
@@ -179,23 +179,7 @@ const PDFExport = ({ onClose }) => {
         ];
 
         drawTable(pdf, tableData, 20, yPosition, pageWidth - 40);
-        yPosition += (tableData.length * 8) + 15;
-
-        // pdf.setFontSize(10);
-        // pdf.setFont(undefined, 'normal');
-        // pdf.text(`Date: ${new Date(latestTest.test_date).toLocaleDateString()}`, 20, yPosition);
-        // yPosition += 5;
-        // pdf.text(`Test Type: ${latestTest.test_type.toUpperCase()}`, 20, yPosition);
-        // yPosition += 5;
-        // pdf.text(`With Correction: ${latestTest.with_correction ? 'Yes' : 'No'}`, 20, yPosition);
-        // yPosition += 10;
-
-        // pdf.text(`Right Eye (OD): ${latestTest.od_result || 'Not tested'}`, 20, yPosition);
-        // yPosition += 5;
-        // pdf.text(`Left Eye (OS): ${latestTest.os_result || 'Not tested'}`, 20, yPosition);
-        // yPosition += 5;
-        // pdf.text(`Both Eyes: ${latestTest.binocular_result || 'Not tested'}`, 20, yPosition);
-        // yPosition += 15;
+        yPosition += (tableData.length * 8) + 5;
       }
 
       // Recent Symptoms
@@ -233,6 +217,7 @@ const PDFExport = ({ onClose }) => {
       }
 
       // Prescription History
+      console.log(prescriptionsData);
       if (prescriptionsData.length > 1 && (reportType === 'complete' || reportType === 'prescriptions')) {
         // Check if new page needed
         if (yPosition > pageHeight - 60) {
