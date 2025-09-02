@@ -17,56 +17,25 @@ export const AuthProvider = ({ children }) => {
   const [session, setSession] = useState(null);
 
   useEffect(() => {
-    const getInitialSession = async () => {
-      try {
-        const { data, error } = await supabase.auth.getSession();
-        const currentSession = data?.session;
+  setLoading(true);
 
-        if (error) throw error;
-        console.log("Estableciendo usuario desde sesión inicial:", currentSession?.user);
+  const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    console.log("Cambio de estado de autenticación:", event, session);
 
-        setSession(currentSession);
+    setSession(session);
+    setUser(session?.user ?? null);
 
-        if (currentSession?.user) {
-          setUser(currentSession.user);
-        } else {
-          setUser(null);
-        }
-      } catch (error) {
-        console.error("Error al obtener la sesión inicial:", error);
-        setUser(null);
-        setSession(null);
-      } finally {
-        setLoading(false);
-      }
-    };
+    if (session?.user) {
+      // Evitamos await directo en el listener
+      ensureUserProfile(session.user).catch(console.error);
+    }
 
-    getInitialSession();
+    setLoading(false);
+  });
 
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (event, session) => {
-      console.log("Cambio de estado de autenticación:", event, session);
-      setSession(session);
-      console.log("Estableciendo usuario desde evento:", session?.user);
+  return () => subscription.unsubscribe();
+}, []);
 
-      if (session?.user) {
-        try {
-          await ensureUserProfile(session.user);
-        } catch (err) {
-          console.warn("Error en ensureUserProfile:", err);
-        }
-        setUser(session.user);
-      } else {
-        setUser(null);
-        setSession(null);
-      }
-
-      setLoading(false);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
 
   const login = async (email, password) => {
     try {
