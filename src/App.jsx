@@ -18,6 +18,7 @@ import MetricsCharts from './components/Metrics/MetricsCharts';
 import ProtectedRoute from './components/Auth/ProtectedRoute';
 import EyePressureForm from './components/Metrics/PressureTracker';
 import PDFExport from './components/Sharing/PDFExport';
+import ProfileSettings from './components/Auth/ProfileSettings';
 
 function App() {
   return (
@@ -123,6 +124,11 @@ function App() {
               <Route path="/profiles/:profileId/share" element={
                 <ProtectedRoute>
                   <PDFExport />
+                </ProtectedRoute>
+              } />
+              <Route path="/account" element={
+                <ProtectedRoute>
+                  <ProfileSettings />
                 </ProtectedRoute>
               } />
               
