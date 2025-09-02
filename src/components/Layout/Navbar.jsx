@@ -36,8 +36,8 @@ const Navbar = () => {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/dashboard" className="flex-shrink-0 flex items-center gap-2" onClick={closeMenus}>
-              <img src={imgDataLogo} alt="Logo icon" className="h-8 w-8" />
-              <img src={imgDataText} alt="Logo text" className="h-8 w-8" />
+              <img src={imgDataLogo} alt="Logo icon" className="h-10 w-10" />
+              <img src={imgDataText} alt="Logo text" className="h-10" />
             </Link>
           </div>
 
