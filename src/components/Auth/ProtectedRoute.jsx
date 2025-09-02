@@ -19,6 +19,7 @@ const ProtectedRoute = ({ children }) => {
 
   // Si no hay usuario → redirige a login
   if (!user) {
+    console.log("Estoy aqui!!!")
     return <Navigate to="/login" replace />;
   }
 
