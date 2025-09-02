@@ -4,9 +4,12 @@ import { supabase } from '../../lib/supabase';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 
 const PDFExport = ({ onClose }) => {
   const { profileId } = useParams();
+  const navigate = useNavigate();
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [reportType, setReportType] = useState('complete');
@@ -231,7 +234,7 @@ const PDFExport = ({ onClose }) => {
       // Save PDF
       const fileName = `eye-health-report-${profileData.name.replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.pdf`;
       pdf.save(fileName);
-
+      navigate('/');
     } catch (error) {
       console.error('Error generating PDF:', error);
       alert('Failed to generate PDF report. Please try again.');
@@ -359,7 +362,7 @@ const PDFExport = ({ onClose }) => {
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-xl font-bold text-gray-900">Generate PDF Report</h2>
           <button
-            onClick={onClose}
+            onClick={() => navigate('/')}
             className="text-gray-400 hover:text-gray-600"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -426,7 +429,7 @@ const PDFExport = ({ onClose }) => {
 
         <div className="flex justify-end space-x-3 mt-6">
           <button
-            onClick={onClose}
+            onClick={() => navigate('/')}
             className="px-4 py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors"
           >
             Cancel
