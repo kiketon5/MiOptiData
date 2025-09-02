@@ -118,7 +118,7 @@ const PDFExport = ({ onClose }) => {
         pdf.text(`Date: ${new Date(latestPrescription.prescription_date).toLocaleDateString()}`, 20, yPosition);
         yPosition += 5;
         if (latestPrescription.doctor_name) {
-          pdf.text(`Doctor: ${latestPrescription.doctor_name}`, 20, yPosition + 6);
+          pdf.text(`Doctor: ${latestPrescription.doctor_name}`, 20, yPosition);
           yPosition += 5;
         }
 
@@ -165,21 +165,37 @@ const PDFExport = ({ onClose }) => {
         pdf.text('Latest Visual Acuity Test', 20, yPosition);
         yPosition += 10;
 
-        pdf.setFontSize(10);
-        pdf.setFont(undefined, 'normal');
-        pdf.text(`Date: ${new Date(latestTest.test_date).toLocaleDateString()}`, 20, yPosition);
-        yPosition += 5;
-        pdf.text(`Test Type: ${latestTest.test_type.toUpperCase()}`, 20, yPosition);
-        yPosition += 5;
-        pdf.text(`With Correction: ${latestTest.with_correction ? 'Yes' : 'No'}`, 20, yPosition);
-        yPosition += 10;
 
-        pdf.text(`Right Eye (OD): ${latestTest.od_result || 'Not tested'}`, 20, yPosition);
-        yPosition += 5;
-        pdf.text(`Left Eye (OS): ${latestTest.os_result || 'Not tested'}`, 20, yPosition);
-        yPosition += 5;
-        pdf.text(`Both Eyes: ${latestTest.binocular_result || 'Not tested'}`, 20, yPosition);
-        yPosition += 15;
+        const tableData = [
+          ['Date', 'Test Type', 'With Correction', 'Right Eye (OD)', 'Left Eye (OD)', 'Both Eyes'],
+          [
+            new Date(latestTest.test_date).toLocaleDateString(),
+            latestTest.test_type.toUpperCase() || '-',
+            latestTest.with_correction ? 'Yes' : 'No',
+            latestTest.od_result || 'Not tested',
+            latestTest.os_result || 'Not tested',
+            latestTest.binocular_result || 'Not tested'
+          ]
+        ];
+
+        drawTable(pdf, tableData, 20, yPosition, pageWidth - 40);
+        yPosition += (tableData.length * 8) + 15;
+
+        // pdf.setFontSize(10);
+        // pdf.setFont(undefined, 'normal');
+        // pdf.text(`Date: ${new Date(latestTest.test_date).toLocaleDateString()}`, 20, yPosition);
+        // yPosition += 5;
+        // pdf.text(`Test Type: ${latestTest.test_type.toUpperCase()}`, 20, yPosition);
+        // yPosition += 5;
+        // pdf.text(`With Correction: ${latestTest.with_correction ? 'Yes' : 'No'}`, 20, yPosition);
+        // yPosition += 10;
+
+        // pdf.text(`Right Eye (OD): ${latestTest.od_result || 'Not tested'}`, 20, yPosition);
+        // yPosition += 5;
+        // pdf.text(`Left Eye (OS): ${latestTest.os_result || 'Not tested'}`, 20, yPosition);
+        // yPosition += 5;
+        // pdf.text(`Both Eyes: ${latestTest.binocular_result || 'Not tested'}`, 20, yPosition);
+        // yPosition += 15;
       }
 
       // Recent Symptoms
@@ -256,7 +272,7 @@ const PDFExport = ({ onClose }) => {
       pdf.text(`Page 1 of ${pdf.getNumberOfPages()}`, pageWidth - 20, footerY, { align: 'right' });
 
       // Save PDF
-      const fileName = `eye-health-report-${profileData.name.replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.pdf`;
+      const fileName = `MiOptiData-${profileData.name.replace(/\s+/g, '-')}-${new Date().toISOString().split('T')[0]}.pdf`;
       pdf.save(fileName);
       navigate('/');
     } catch (error) {
