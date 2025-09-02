@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { supabase } from '../../lib/supabase';
-import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable";
+import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { useParams } from 'react-router-dom';
 
@@ -241,29 +240,32 @@ const PDFExport = ({ onClose }) => {
     }
   };
 
-  const drawTable = (pdf, headers, data, startY) => {
-    autoTable(pdf, {
-      startY: startY,
-      head: [headers],
-      body: data,
-      theme: "grid",
-      styles: {
-        fontSize: 10,
-        cellPadding: 3,
-      },
-      headStyles: {
-        fillColor: [41, 128, 185], // azul suave
-        textColor: 255,
-        halign: "center",
-      },
-      bodyStyles: {
-        halign: "center",
-      },
+  const drawTable = (pdf, data, x, y, width) => {
+    const rowHeight = 6;
+    const colWidth = width / data[0].length;
+
+    data.forEach((row, rowIndex) => {
+      row.forEach((cell, colIndex) => {
+        const cellX = x + (colIndex * colWidth);
+        const cellY = y + (rowIndex * rowHeight);
+        
+        // Header row styling
+        if (rowIndex === 0) {
+          pdf.setFillColor(240, 240, 240);
+          pdf.rect(cellX, cellY - 4, colWidth, rowHeight, 'F');
+          pdf.setFont(undefined, 'bold');
+        } else {
+          pdf.setFont(undefined, 'normal');
+        }
+        
+        pdf.setFontSize(8);
+        pdf.text(cell.toString(), cellX + 2, cellY, { maxWidth: colWidth - 4 });
+        
+        // Draw cell border
+        pdf.rect(cellX, cellY - 4, colWidth, rowHeight);
+      });
     });
-
-    return pdf.lastAutoTable.finalY + 10; // para saber en qué Y seguir escribiendo
   };
-
 
   const loadProfile = async () => {
     const { data, error } = await supabase
