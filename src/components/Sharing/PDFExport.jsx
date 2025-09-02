@@ -37,48 +37,72 @@ const PDFExport = ({ onClose }) => {
       let yPosition = 20;
 
       // Header
+      pdf.setFillColor(30, 144, 255); // azul
+      pdf.rect(0, 0, pageWidth, 25, 'F');
+      pdf.setTextColor(255, 255, 255);
       pdf.setFontSize(20);
       pdf.setFont(undefined, 'bold');
-      pdf.text('Eye Health Report', pageWidth / 2, yPosition, { align: 'center' });
+      pdf.text('MiOptiData Report', pageWidth / 2, yPosition, { align: 'center' });
+      pdf.setTextColor(0, 0, 0);
       yPosition += 15;
 
       // Patient Information
+      pdf.setFillColor(245, 245, 245); // gris claro
+      pdf.roundedRect(15, yPosition - 2, pageWidth - 30, 30, 3, 3, 'F');
+
       pdf.setFontSize(14);
       pdf.setFont(undefined, 'bold');
-      pdf.text('Patient Information', 20, yPosition);
+      pdf.text('Patient Information', 20, yPosition + 5);
       yPosition += 10;
 
-      pdf.setFontSize(10);
+      pdf.setFontSize(12);
       pdf.setFont(undefined, 'normal');
-      pdf.text(`Name: ${profileData.name}`, 20, yPosition);
+      pdf.text(`Name: ${profileData.name}`, 20, yPosition + 12);
       yPosition += 5;
-      pdf.text(`Relationship: ${profileData.relationship}`, 20, yPosition);
+      pdf.text(`Relationship: ${profileData.relationship}`, 20, yPosition + 18);
       yPosition += 5;
-      pdf.text(`Date of Birth: ${new Date(profileData.date_of_birth).toLocaleDateString()}`, 20, yPosition);
+      pdf.text(`Date of Birth: ${new Date(profileData.date_of_birth).toLocaleDateString()}`, 20, yPosition + 24);
       yPosition += 5;
-      pdf.text(`Report Generated: ${new Date().toLocaleDateString()}`, 20, yPosition);
+      pdf.text(`Report Generated: ${new Date().toLocaleDateString()}`, 20, yPosition + 12);
       yPosition += 5;
-      pdf.text(`Report Period: ${new Date(dateRange.start).toLocaleDateString()} - ${new Date(dateRange.end).toLocaleDateString()}`, 20, yPosition);
+      pdf.text(`Report Period: ${new Date(dateRange.start).toLocaleDateString()} - ${new Date(dateRange.end).toLocaleDateString()}`, 20, yPosition + 12);
       yPosition += 15;
+
+      pdf.setDrawColor(200);
+      pdf.setLineWidth(0.5);
+      pdf.line(15, yPosition, pageWidth - 15, yPosition);
+      yPosition += 5;
 
       // Summary Statistics
       if (reportType === 'complete' || reportType === 'summary') {
-        pdf.setFontSize(14);
-        pdf.setFont(undefined, 'bold');
-        pdf.text('Summary Statistics', 20, yPosition);
-        yPosition += 10;
+        const stats = [
+        { label: 'Total Prescriptions', value: prescriptionsData.length },
+        { label: 'Total Visual Tests', value: testsData.length },
+        { label: 'Total Symptoms Records', value: symptomsData.length },
+        { label: 'Total Pressure Measurements', value: pressureData.length }
+      ];
 
-        pdf.setFontSize(10);
+      pdf.setFontSize(10);
+      stats.forEach((stat, i) => {
+        const xPos = 17 + (i % 2) * 90; // dos columnas
+        const yPos = yPosition + Math.floor(i / 2) * 12;
+
+        pdf.setFillColor(224, 235, 255); // celda azul clara
+        pdf.roundedRect(xPos - 2, yPos - 4, 85, 10, 2, 2, 'F');
+
+        pdf.setTextColor(30, 144, 255);
+        pdf.setFont(undefined, 'bold');
+        pdf.text(`${stat.value}`, xPos + 2, yPos + 3);
+
+        pdf.setTextColor(0, 0, 0);
         pdf.setFont(undefined, 'normal');
-        pdf.text(`Total Prescriptions: ${prescriptionsData.length}`, 20, yPosition);
-        yPosition += 5;
-        pdf.text(`Total Visual Tests: ${testsData.length}`, 20, yPosition);
-        yPosition += 5;
-        pdf.text(`Total Symptom Records: ${symptomsData.length}`, 20, yPosition);
-        yPosition += 5;
-        pdf.text(`Total Pressure Measurements: ${pressureData.length}`, 20, yPosition);
-        yPosition += 15;
-      }
+        pdf.text(stat.label, xPos + 2, yPos + 8);
+      });
+      yPosition += Math.ceil(stats.length / 2) * 12 + 10;
+
+      pdf.line(15, yPosition, pageWidth - 15, yPosition);
+      yPosition += 5;
+    }
 
       // Current Prescription
       if (prescriptionsData.length > 0 && (reportType === 'complete' || reportType === 'prescriptions')) {
@@ -94,7 +118,7 @@ const PDFExport = ({ onClose }) => {
         pdf.text(`Date: ${new Date(latestPrescription.prescription_date).toLocaleDateString()}`, 20, yPosition);
         yPosition += 5;
         if (latestPrescription.doctor_name) {
-          pdf.text(`Doctor: ${latestPrescription.doctor_name}`, 20, yPosition);
+          pdf.text(`Doctor: ${latestPrescription.doctor_name}`, 20, yPosition + 6);
           yPosition += 5;
         }
 
@@ -243,32 +267,47 @@ const PDFExport = ({ onClose }) => {
     }
   };
 
-  const drawTable = (pdf, data, x, y, width) => {
-    const rowHeight = 6;
-    const colWidth = width / data[0].length;
+const drawTable = (pdf, data, x, y, width) => {
+  const rowHeight = 7; // un poco más alto
+  const colWidth = width / data[0].length;
 
-    data.forEach((row, rowIndex) => {
-      row.forEach((cell, colIndex) => {
-        const cellX = x + (colIndex * colWidth);
-        const cellY = y + (rowIndex * rowHeight);
-        
-        // Header row styling
-        if (rowIndex === 0) {
-          pdf.setFillColor(240, 240, 240);
-          pdf.rect(cellX, cellY - 4, colWidth, rowHeight, 'F');
-          pdf.setFont(undefined, 'bold');
+  data.forEach((row, rowIndex) => {
+    row.forEach((cell, colIndex) => {
+      const cellX = x + colIndex * colWidth;
+      const cellY = y + rowIndex * rowHeight;
+
+      // Encabezado
+      if (rowIndex === 0) {
+        pdf.setFillColor(41, 128, 185); // azul oscuro
+        pdf.setTextColor(255, 255, 255); // texto blanco
+        pdf.setFont(undefined, 'bold');
+      } else {
+        // Zebra stripes
+        if (rowIndex % 2 === 0) {
+          pdf.setFillColor(245, 245, 245); // gris claro
         } else {
-          pdf.setFont(undefined, 'normal');
+          pdf.setFillColor(255, 255, 255); // blanco
         }
-        
-        pdf.setFontSize(8);
-        pdf.text(cell.toString(), cellX + 2, cellY, { maxWidth: colWidth - 4 });
-        
-        // Draw cell border
-        pdf.rect(cellX, cellY - 4, colWidth, rowHeight);
-      });
+        pdf.setTextColor(0, 0, 0); // texto negro
+        pdf.setFont(undefined, 'normal');
+      }
+
+      // Fondo de la celda
+      pdf.rect(cellX, cellY - 5, colWidth, rowHeight, 'F');
+
+      // Texto centrado
+      pdf.setFontSize(9);
+      pdf.text(cell.toString(), cellX + colWidth / 2, cellY, { align: 'center', baseline: 'middle' });
+
+      // Borde de la celda
+      pdf.setDrawColor(200, 200, 200);
+      pdf.rect(cellX, cellY - 5, colWidth, rowHeight);
     });
-  };
+  });
+
+  return y + data.length * rowHeight + 2; // devuelve la nueva Y
+};
+
 
   const loadProfile = async () => {
     const { data, error } = await supabase
