@@ -13,7 +13,8 @@ export const AuthProvider = ({ children }) => {
     // Get initial session
     const getInitialSession = async () => {
       try {
-        const { data: { session }, error } = await supabase.auth.getSession();
+        const { data, error } = await supabase.auth.getSession();
+        const session = data?.session;
         if (error) throw error;
         
         setSession(session);
@@ -26,6 +27,8 @@ export const AuthProvider = ({ children }) => {
       } catch (error) {
         console.error('Error getting session:', error);
       } finally {
+        console.log("Finalizando carga. Sesión:", session);
+
         setLoading(false);
       }
     };
