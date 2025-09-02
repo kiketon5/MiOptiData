@@ -42,30 +42,30 @@ const PDFExport = ({ onClose }) => {
       pdf.setTextColor(255, 255, 255);
       pdf.setFontSize(20);
       pdf.setFont(undefined, 'bold');
-      pdf.text('MiOptiData Report', pageWidth / 2, yPosition, { align: 'center' });
+      pdf.text('MiOptiData Report', pageWidth / 2, 12.5, { align: 'center' });
       pdf.setTextColor(0, 0, 0);
       yPosition += 15;
 
       // Patient Information
       pdf.setFillColor(245, 245, 245); // gris claro
-      pdf.roundedRect(15, yPosition - 2, pageWidth - 30, 30, 3, 3, 'F');
+      pdf.roundedRect(15, yPosition - 2, pageWidth - 30, 40, 3, 3, 'F');
 
       pdf.setFontSize(14);
       pdf.setFont(undefined, 'bold');
       pdf.text('Patient Information', 20, yPosition + 5);
-      yPosition += 10;
+      // yPosition += 10;
 
       pdf.setFontSize(12);
       pdf.setFont(undefined, 'normal');
-      pdf.text(`Name: ${profileData.name}`, 20, yPosition + 12);
+      pdf.text(`Name: ${profileData.name}`, 25, yPosition);
       yPosition += 5;
-      pdf.text(`Relationship: ${profileData.relationship}`, 20, yPosition + 18);
+      pdf.text(`Relationship: ${profileData.relationship}`, 25, yPosition);
       yPosition += 5;
-      pdf.text(`Date of Birth: ${new Date(profileData.date_of_birth).toLocaleDateString()}`, 20, yPosition + 24);
+      pdf.text(`Date of Birth: ${new Date(profileData.date_of_birth).toLocaleDateString()}`, 25, yPosition);
       yPosition += 5;
-      pdf.text(`Report Generated: ${new Date().toLocaleDateString()}`, 20, yPosition + 12);
+      pdf.text(`Report Generated: ${new Date().toLocaleDateString()}`, 25, yPosition);
       yPosition += 5;
-      pdf.text(`Report Period: ${new Date(dateRange.start).toLocaleDateString()} - ${new Date(dateRange.end).toLocaleDateString()}`, 20, yPosition + 12);
+      pdf.text(`Report Period: ${new Date(dateRange.start).toLocaleDateString()} - ${new Date(dateRange.end).toLocaleDateString()}`, 25, yPosition);
       yPosition += 15;
 
       pdf.setDrawColor(200);
