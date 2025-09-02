@@ -17,8 +17,11 @@ export const AuthProvider = ({ children }) => {
         if (error) throw error;
         
         setSession(session);
+
         if (session?.user) {
           setUser(session.user);
+        } else {
+          setUser(null);
         }
       } catch (error) {
         console.error('Error getting session:', error);
