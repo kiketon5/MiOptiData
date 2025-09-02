@@ -46,7 +46,7 @@ const PDFExport = ({ onClose }) => {
       const pageHeight = pdf.internal.pageSize.getHeight();
       let yPosition = 20;
 
-      // Header
+      // Header #1E90FF #3B81F4
       pdf.setFillColor(255, 255, 255); // azul
       pdf.rect(0, 0, pageWidth, 25, "F");
 
@@ -54,10 +54,10 @@ const PDFExport = ({ onClose }) => {
       pdf.addImage(imgDataLogo, "PNG", 10, 2.5, 20, 20);
 
       // Dibuja el texto "Mi OptiData" justo a la derecha del ícono
-      pdf.addImage(imgDataText, "PNG", 32, 2.5, 50, 20); // Ajusta el ancho según el tamaño del texto
+      pdf.addImage(imgDataText, "PNG", 32, 2.5, 35, 20); // Ajusta el ancho según el tamaño del texto
 
 
-      pdf.setTextColor(30, 144, 255);
+      pdf.setTextColor(59, 129, 244);
       pdf.setFontSize(26);
       pdf.setFont(undefined, "bold");
       pdf.text("REPORT", pageWidth / 2, 15, { align: "center" });
