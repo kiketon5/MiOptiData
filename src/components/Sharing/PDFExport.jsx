@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect} from 'react';
+import { useAuth } from '../../context/AuthContext';
 import { useParams } from "react-router-dom";
-import { supabase } from "../supabaseClient";
+
+import { supabase } from '../../lib/supabase';
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
