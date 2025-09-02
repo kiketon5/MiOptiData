@@ -16,54 +16,57 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const initializeAuth = async () => {
-      try {
-        const { data, error } = await supabase.auth.getSession();
-        const currentSession = data?.session;
+  const getInitialSession = async () => {
+    try {
+      const { data, error } = await supabase.auth.getSession();
+      const currentSession = data?.session;
 
-        if (error) throw error;
+      if (error) throw error;
+      console.log("Estableciendo usuario desde sesión inicial:", currentSession?.user);
 
-        setSession(currentSession);
+      setSession(currentSession);
 
-        if (currentSession?.user) {
-          setUser(currentSession.user);
-        } else {
-          setUser(null);
+      if (currentSession?.user) {
+        setUser(currentSession.user);
+      } else {
+        setUser(null);
+      }
+    } catch (error) {
+      console.error('Error al obtener la sesión inicial:', error);
+      setUser(null);
+      setSession(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  getInitialSession();
+
+  const { data: { subscription } } = supabase.auth.onAuthStateChange(
+    async (event, session) => {
+      console.log('Cambio de estado de autenticación:', event, session);
+      setSession(session);
+      console.log("Estableciendo usuario desde evento:", session?.user);
+
+      if (session?.user) {
+        try {
+          await ensureUserProfile(session.user);
+        } catch (err) {
+          console.warn('Error en ensureUserProfile:', err);
         }
-      } catch (err) {
-        console.error('Error al obtener la sesión inicial:', err);
+        setUser(session.user);
+      } else {
         setUser(null);
         setSession(null);
-      } finally {
-        setLoading(false);
       }
-    };
 
-    initializeAuth();
+      setLoading(false);
+    }
+  );
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (event, newSession) => {
-        console.log('Cambio de estado de autenticación:', event, newSession);
-        setSession(newSession);
+  return () => subscription.unsubscribe();
+}, []);
 
-        if (newSession?.user) {
-          try {
-            await ensureUserProfile(newSession.user);
-          } catch (err) {
-            console.warn('Error en ensureUserProfile:', err);
-          }
-          setUser(newSession.user);
-        } else {
-          setUser(null);
-          setSession(null);
-        }
-
-        setLoading(false);
-      }
-    );
-
-    return () => subscription.unsubscribe();
-  }, []);
 
   // Métodos de autenticación
   const login = async (email, password) => {
