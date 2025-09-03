@@ -1,22 +1,19 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { validateEmail, validatePassword, validateName, validateDate } from '../../utils/validation';
+import { validateEmail, validatePassword } from '../../utils/validation';
+import MainLayout from '../FrontPage/MainLayout';
 
-const Register = () => {
+const Login = () => {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
     email: '',
     password: '',
-    confirmPassword: '',
-    dateOfBirth: '',
   });
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const [registerError, setRegisterError] = useState('');
+  const [loginError, setLoginError] = useState('');
   
-  const { register, loginWithGoogle } = useAuth();
+  const { login, loginWithGoogle } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -38,18 +35,6 @@ const Register = () => {
   const validateForm = () => {
     const newErrors = {};
     
-    if (!formData.firstName) {
-      newErrors.firstName = 'First name is required';
-    } else if (!validateName(formData.firstName)) {
-      newErrors.firstName = 'First name should only contain letters';
-    }
-    
-    if (!formData.lastName) {
-      newErrors.lastName = 'Last name is required';
-    } else if (!validateName(formData.lastName)) {
-      newErrors.lastName = 'Last name should only contain letters';
-    }
-    
     if (!formData.email) {
       newErrors.email = 'Email is required';
     } else if (!validateEmail(formData.email)) {
@@ -58,34 +43,6 @@ const Register = () => {
     
     if (!formData.password) {
       newErrors.password = 'Password is required';
-    } else if (!validatePassword(formData.password)) {
-      newErrors.password = 'Password must be at least 8 characters long and include a number, a lowercase letter, an uppercase letter, and a special character';
-    }
-    
-    if (!formData.confirmPassword) {
-      newErrors.confirmPassword = 'Please confirm your password';
-    } else if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
-    }
-    
-    if (!formData.dateOfBirth) {
-      newErrors.dateOfBirth = 'Date of birth is required';
-    } else if (!validateDate(formData.dateOfBirth)) {
-      newErrors.dateOfBirth = 'Please enter a valid date';
-    } else {
-      // Check if the user is at least 12 years old
-      const dob = new Date(formData.dateOfBirth);
-      const today = new Date();
-      let age = today.getFullYear() - dob.getFullYear();
-      const monthDiff = today.getMonth() - dob.getMonth();
-      
-      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
-        age--;
-      }
-      
-      if (age < 12) {
-        newErrors.dateOfBirth = 'You must be at least 12 years old to register';
-      }
     }
     
     setErrors(newErrors);
@@ -94,24 +51,18 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setRegisterError('');
+    setLoginError('');
     
     if (!validateForm()) return;
     
     setIsLoading(true);
     
     try {
-      await register(
-        formData.email, 
-        formData.password, 
-        formData.firstName, 
-        formData.lastName, 
-        formData.dateOfBirth
-      );
+      await login(formData.email, formData.password);
       navigate('/dashboard');
     } catch (error) {
-      console.error('Registration error:', error);
-      setRegisterError(error.message || 'Failed to register. Please try again.');
+      console.error('Login error:', error);
+      setLoginError(error.message || 'Failed to login. Please check your credentials and try again.');
     } finally {
       setIsLoading(false);
     }
@@ -119,60 +70,32 @@ const Register = () => {
 
   const handleGoogleLogin = async () => {
     setIsLoading(true);
-    setRegisterError('');
+    setLoginError('');
 
     try {
       await loginWithGoogle();
       // OAuth redirect will handle navigation
     } catch (err) {
-      setRegisterError(err.message || 'Google registration failed');
+      setLoginError(err.message || 'Google login failed');
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white rounded-lg shadow-md overflow-hidden p-6 my-10">
+    <div className="max-w-md mx-auto bg-white rounded-lg shadow-md overflow-hidden p-6 mt-10">
       <div className="text-center mb-8">
         <h1 className="text-3xl font-bold text-blue-600">MiOptiData</h1>
-        <h2 className="text-xl font-semibold mt-2">Create an Account</h2>
+        <h2 className="text-xl font-semibold mt-2">Sign In</h2>
       </div>
       
-      {/* {registerError && (
+      {/* {loginError && (
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4" role="alert">
-          <span className="block sm:inline">{registerError}</span>
+          <span className="block sm:inline">{loginError}</span>
         </div>
       )}
       
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">First Name</label>
-            <input
-              type="text"
-              id="firstName"
-              name="firstName"
-              value={formData.firstName}
-              onChange={handleChange}
-              className={`mt-1 block w-full px-3 py-2 border ${errors.firstName ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
-            />
-            {errors.firstName && <p className="mt-1 text-sm text-red-600">{errors.firstName}</p>}
-          </div>
-          
-          <div>
-            <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">Last Name</label>
-            <input
-              type="text"
-              id="lastName"
-              name="lastName"
-              value={formData.lastName}
-              onChange={handleChange}
-              className={`mt-1 block w-full px-3 py-2 border ${errors.lastName ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
-            />
-            {errors.lastName && <p className="mt-1 text-sm text-red-600">{errors.lastName}</p>}
-          </div>
-        </div>
-        
         <div>
           <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
           <input
@@ -188,19 +111,6 @@ const Register = () => {
         </div>
         
         <div>
-          <label htmlFor="dateOfBirth" className="block text-sm font-medium text-gray-700">Date of Birth</label>
-          <input
-            type="date"
-            id="dateOfBirth"
-            name="dateOfBirth"
-            value={formData.dateOfBirth}
-            onChange={handleChange}
-            className={`mt-1 block w-full px-3 py-2 border ${errors.dateOfBirth ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
-          />
-          {errors.dateOfBirth && <p className="mt-1 text-sm text-red-600">{errors.dateOfBirth}</p>}
-        </div>
-        
-        <div>
           <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
           <input
             type="password"
@@ -213,17 +123,12 @@ const Register = () => {
           {errors.password && <p className="mt-1 text-sm text-red-600">{errors.password}</p>}
         </div>
         
-        <div>
-          <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">Confirm Password</label>
-          <input
-            type="password"
-            id="confirmPassword"
-            name="confirmPassword"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            className={`mt-1 block w-full px-3 py-2 border ${errors.confirmPassword ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
-          />
-          {errors.confirmPassword && <p className="mt-1 text-sm text-red-600">{errors.confirmPassword}</p>}
+        <div className="flex items-center justify-between">
+          <div className="text-sm">
+            <Link to="/forgot-password" className="font-medium text-blue-600 hover:text-blue-500">
+              Forgot your password?
+            </Link>
+          </div>
         </div>
         
         <div>
@@ -238,9 +143,9 @@ const Register = () => {
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                Creating Account...
+                Signing in...
               </>
-            ) : 'Create Account'}
+            ) : 'Sign In'}
           </button>
         </div>
       </form>
@@ -251,11 +156,11 @@ const Register = () => {
           <div className="w-full border-t border-gray-300" />
         </div>
         <div className="relative flex justify-center text-sm">
-          <span className="px-2 bg-white text-gray-500">Or sign up with</span>
+          <span className="px-2 bg-white text-gray-500">Or continue with</span>
         </div>
       </div> */}
 
-      {/* Google Registration Button */}
+      {/* Google Login Button */}
       <div className="mt-6">
         <button
           type="button"
@@ -269,15 +174,15 @@ const Register = () => {
             <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
             <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
           </svg>
-          Sign up with Google
+          Continue with Google
         </button>
       </div>
       
       <div className="mt-6 text-center">
         <p className="text-sm text-gray-600">
-          Already have an account?{' '}
-          <Link to="/login" className="font-medium text-blue-600 hover:text-blue-500">
-            Sign in
+          Don't have an account?{' '}
+          <Link to="/register" className="font-medium text-blue-600 hover:text-blue-500">
+            Sign up
           </Link>
         </p>
       </div>
@@ -285,4 +190,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;
