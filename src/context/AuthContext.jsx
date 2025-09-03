@@ -15,6 +15,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [session, setSession] = useState(null);
+  const [showLogin, setShowLogin] = useState(false);
 
   useEffect(() => {
   setLoading(true);
@@ -96,6 +97,7 @@ export const AuthProvider = ({ children }) => {
     register,
     loginWithGoogle,
     logout,
+    setShowLogin,
     isAuthenticated: !!user,
   };
 

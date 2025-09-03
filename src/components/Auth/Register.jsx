@@ -9,7 +9,7 @@ import {
 } from "../../utils/validation";
 
 const Register = () => {
-  const [showRegister, setShowRegister] = useState(false);
+  const { setShowLogin } = useAuth();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -146,26 +146,9 @@ const Register = () => {
   return (
     <div className="bg-gray-50 flex flex-col">
       {/* Hero Section */}
-      {!showRegister && (
-        <section className="max-w-4xl mx-auto text-center py-16 px-6">
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-            Tu visión, siempre contigo
-          </h1>
-          <p className="text-gray-600 mb-6">
-            Guarda tus recetas ópticas de forma segura y accede a ellas cuando
-            quieras.
-          </p>
-          <button
-            onClick={() => setShowRegister(true)}
-            className="inline-block px-6 py-3 rounded-md text-white bg-blue-700 hover:bg-blue-800 transition font-medium mb-0"
-          >
-            Empieza ahora
-          </button>
-        </section>
-      )}
+
 
       {/* Google Registration Button */}
-      {showRegister && (
         <div className="max-w-md mx-auto bg-white rounded-lg shadow-md overflow-hidden p-6 mt-10">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-blue-600">MiOptiData</h1>
@@ -205,6 +188,7 @@ const Register = () => {
               Already have an account?{" "}
               <Link
                 to="/login"
+                onClick={() => setShowLogin(true)}
                 className="font-medium text-blue-600 hover:text-blue-500"
               >
                 Sign in
@@ -212,7 +196,7 @@ const Register = () => {
             </p>
           </div>
         </div>
-      )}
+
       {/* Features */}
       <section className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 text-center px-6 py-8">
         <div>
