@@ -20,31 +20,32 @@ const { isAuthenticated, loading } = useAuth();
       </main>
 
       {/* Features */}
-      <section className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center px-6 py-12">
+      <section className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 text-center px-6 py-8">
         <div>
-          <span className="text-4xl mx-auto mb-3 block">📄</span>
-          <h3 className="text-lg font-semibold text-gray-900">Historial completo</h3>
-          <p className="text-gray-600 mt-2">
+            <span className="text-4xl mb-2 block">📄</span>
+            <h3 className="text-lg font-semibold text-gray-900">Historial completo</h3>
+            <p className="text-gray-600 mt-1">
             Guarda tus recetas y evolución visual fácilmente
-          </p>
+            </p>
         </div>
 
         <div>
-          <span className="text-4xl mx-auto mb-3 block">🔒</span>
-          <h3 className="text-lg font-semibold text-gray-900">Seguridad garantizada</h3>
-          <p className="text-gray-600 mt-2">
+            <span className="text-4xl mb-2 block">🔒</span>
+            <h3 className="text-lg font-semibold text-gray-900">Seguridad garantizada</h3>
+            <p className="text-gray-600 mt-1">
             Solo tú puedes ver tus datos
-          </p>
+            </p>
         </div>
 
         <div>
-          <span className="text-4xl mx-auto mb-3 block">🌍</span>
-          <h3 className="text-lg font-semibold text-gray-900">Accede desde cualquier lugar</h3>
-          <p className="text-gray-600 mt-2">
+            <span className="text-4xl mb-2 block">🌍</span>
+            <h3 className="text-lg font-semibold text-gray-900">Accede desde cualquier lugar</h3>
+            <p className="text-gray-600 mt-1">
             Compatible con móvil, tablet o PC
-          </p>
+            </p>
         </div>
-      </section>
+        </section>
+
 
       {/* Footer */}
       <footer className="border-t py-6 text-center text-sm text-gray-600">
