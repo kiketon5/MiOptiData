@@ -38,8 +38,6 @@ function App() {
                 <Route index element={<LandingSection />} />       {/* "/" → LandingPage */}
                 <Route path="login" element={<Login />} /> {/* "/login" → LoginPage */}
                 <Route path="register" element={<Register />} /> {/* "/register" → RegisterPage */}
-                <Route path="legal" element={<LegalPage />} />  {/* "/legal" → LegalPage */}
-                <Route path="privacy" element={<PrivacyPage />} /> {/* "/privacy" → PrivacyPage */}
               </Route>
 
               {/* Protected Routes under /dashboard */}
@@ -185,6 +183,22 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <ProfileSettings />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/privacy"
+                element={
+                  <ProtectedRoute>
+                    <PrivacyPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/legal"
+                element={
+                  <ProtectedRoute>
+                    <LegalPage />
                   </ProtectedRoute>
                 }
               />

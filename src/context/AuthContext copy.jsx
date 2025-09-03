@@ -17,42 +17,31 @@ export const AuthProvider = ({ children }) => {
   const [session, setSession] = useState(null);
 
   useEffect(() => {
-    setLoading(true);
+  setLoading(true);
 
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log("Cambio de estado de autenticación:", event, session);
+  const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    console.log("Cambio de estado de autenticación:", event, session);
 
-      setSession(session);
-      setUser(session?.user ?? null);
+    setSession(session);
+    setUser(session?.user ?? null);
 
-      if (session?.user) {
-        // Evitamos await directo en el listener
-        ensureUserProfile(session.user).catch(console.error);
-      }
+    if (session?.user) {
+      // Evitamos await directo en el listener
+      ensureUserProfile(session.user).catch(console.error);
+    }
 
-      setLoading(false);
-    });
+    setLoading(false);
+  });
 
-    return () => subscription.unsubscribe();
-  }, []);
+  return () => subscription.unsubscribe();
+}, []);
+
 
   const login = async (email, password) => {
     try {
       setLoading(true);
-      const { session, user } = await signIn(email, password);
-
-      // ✅ Actualiza el estado manualmente
-      setSession(session);
-      setUser(user);
-
-      // Opcional: asegurar perfil
-      if (user) {
-        await ensureUserProfile(user);
-      }
-
-      return { session, user };
+      const data = await signIn(email, password);
+      return data;
     } catch (error) {
       console.error("Login error:", error);
       throw error;
