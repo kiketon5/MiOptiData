@@ -1,25 +1,6 @@
-import React, { useEffect } from "react";
-import { Link, useNavigate, Outlet } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
-
 const MainLayout = () => {
-const { isAuthenticated, loading } = useAuth();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!loading && isAuthenticated) {
-        console.log("Holla ir a dashboard");
-      navigate("/dashboard"); // 👈 redirige si ya está logueado
-    }
-  }, [isAuthenticated, loading, navigate]);
-
   return (
     <div className="bg-gray-50 min-h-screen flex flex-col">
-      {/* Contenido dinámico */}
-      <main>
-        <Outlet /> {/* Aquí se cargarán LandingPage o RegisterPage */}
-      </main>
-
       {/* Features */}
       <section className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 text-center px-6 py-8">
         <div>
@@ -46,20 +27,6 @@ const { isAuthenticated, loading } = useAuth();
             </p>
         </div>
         </section>
-
-
-      {/* Footer */}
-      <footer className="border-t py-6 text-center text-sm text-gray-600">
-        <div className="space-x-4 mb-2">
-          <Link to="/legal" className="hover:underline">
-            Legal
-          </Link>
-          <Link to="/privacy" className="hover:underline">
-            Política de privacidad
-          </Link>
-        </div>
-        <p>© 2025 MiOptiData</p>
-      </footer>
     </div>
   );
 };
