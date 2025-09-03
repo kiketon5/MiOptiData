@@ -8,6 +8,7 @@ const { isAuthenticated, loading } = useAuth();
 
   useEffect(() => {
     if (!loading && isAuthenticated) {
+        console.log("Holla ir a dashboard");
       navigate("/dashboard"); // 👈 redirige si ya está logueado
     }
   }, [isAuthenticated, loading, navigate]);
