@@ -20,6 +20,8 @@ import EyePressureForm from './components/Metrics/PressureTracker';
 import PDFExport from './components/Sharing/PDFExport';
 import ProfileSettings from './components/Auth/ProfileSettings';
 import LandingSection from './components/Auth/Inicio';
+import LegalPage from './components/FrontPage/Legal';
+import PrivacyPage from './components/FrontPage/Privacy';
 
 function App() {
   return (
@@ -135,6 +137,16 @@ function App() {
               <Route path="/landingsection" element={
                 <ProtectedRoute>
                   <LandingSection />
+                </ProtectedRoute>
+              } />
+              <Route path="/legal" element={
+                <ProtectedRoute>
+                  <LegalPage />
+                </ProtectedRoute>
+              } />
+              <Route path="/privacy" element={
+                <ProtectedRoute>
+                  <PrivacyPage />
                 </ProtectedRoute>
               } />
               

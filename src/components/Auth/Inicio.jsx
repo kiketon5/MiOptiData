@@ -51,10 +51,10 @@ const LandingSection = () => {
       <footer className="border-t py-6 text-center text-sm text-gray-600">
         <div className="space-x-4 mb-2">
           <Link to="/legal" className="hover:underline">
-            Aviso legal
+            Legal
           </Link>
           <Link to="/privacy" className="hover:underline">
-            Política de privacidad
+            Policity Privacy
           </Link>
         </div>
         <p>© 2025 MiOptiData</p>
