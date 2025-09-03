@@ -15,7 +15,7 @@ const { isAuthenticated, loading } = useAuth();
   return (
     <div className="bg-gray-50 min-h-screen flex flex-col">
       {/* Contenido dinámico */}
-      <main className="flex-1">
+      <main>
         <Outlet /> {/* Aquí se cargarán LandingPage o RegisterPage */}
       </main>
 
