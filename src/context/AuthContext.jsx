@@ -39,10 +39,11 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
+
     try {
       setLoading(true);
       const { session, user } = await signIn(email, password);
-
+      console.log("Login successful →", user);
       // ✅ Actualiza el estado manualmente
       setSession(session);
       setUser(user);
