@@ -88,7 +88,7 @@ const Login = () => {
         <h2 className="text-xl font-semibold mt-2">Sign In</h2>
       </div>
       
-      {/* {loginError && (
+      {loginError && (
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4" role="alert">
           <span className="block sm:inline">{loginError}</span>
         </div>
@@ -149,7 +149,7 @@ const Login = () => {
         </div>
       </form>
 
-      {/* Social Login Divider *
+      {/* Social Login Divider */}
       <div className="mt-6 relative">
         <div className="absolute inset-0 flex items-center">
           <div className="w-full border-t border-gray-300" />
@@ -157,8 +157,7 @@ const Login = () => {
         <div className="relative flex justify-center text-sm">
           <span className="px-2 bg-white text-gray-500">Or continue with</span>
         </div>
-      </div> 
-      */}
+      </div>
 
       {/* Google Login Button */}
       <div className="mt-6">
