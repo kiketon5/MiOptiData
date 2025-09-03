@@ -1,7 +1,17 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 const LandingSection = () => {
+  const { isAuthenticated, loading } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!loading && isAuthenticated) {
+      navigate("/dashboard"); // 👈 redirige si ya está logueado
+    }
+  }, [isAuthenticated, loading, navigate]);
+
   return (
     <div className="bg-gray-50">
       {/* Hero Section */}
@@ -54,7 +64,7 @@ const LandingSection = () => {
             Legal
           </Link>
           <Link to="/privacy" className="hover:underline">
-            Policity Privacy
+            Política de privacidad
           </Link>
         </div>
         <p>© 2025 MiOptiData</p>
