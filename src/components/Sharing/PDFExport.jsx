@@ -346,7 +346,7 @@ const PDFExport = ({ onClose }) => {
         new Date().toISOString().split("T")[0]
       }.pdf`;
       pdf.save(fileName);
-      navigate("/");
+      navigate("/dasboard");
     } catch (error) {
       console.error("Error generating PDF:", error);
       alert("Failed to generate PDF report. Please try again.");
@@ -493,7 +493,7 @@ const PDFExport = ({ onClose }) => {
             Generate PDF Report
           </h2>
           <button
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/dashboard")}
             className="text-gray-400 hover:text-gray-600"
           >
             <svg
@@ -577,7 +577,7 @@ const PDFExport = ({ onClose }) => {
 
         <div className="flex justify-end space-x-3 mt-6">
           <button
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/dashboard")}
             className="px-4 py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 transition-colors"
           >
             Cancel

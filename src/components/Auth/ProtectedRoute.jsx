@@ -16,10 +16,10 @@ const ProtectedRoute = ({ children }) => {
   );
 }
 
-
+  console.log(user)
   // Si no hay usuario → redirige a login
   if (!user) {
-    console.log("Estoy aqui!!!")
+    console.log("Estoy aqui!!!");
     return <Navigate to="/" replace />;
   }
 
