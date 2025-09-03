@@ -19,6 +19,7 @@ import ProtectedRoute from './components/Auth/ProtectedRoute';
 import EyePressureForm from './components/Metrics/PressureTracker';
 import PDFExport from './components/Sharing/PDFExport';
 import ProfileSettings from './components/Auth/ProfileSettings';
+import LandingSection from './components/Auth/Inicio';
 
 function App() {
   return (
@@ -129,6 +130,11 @@ function App() {
               <Route path="/account" element={
                 <ProtectedRoute>
                   <ProfileSettings />
+                </ProtectedRoute>
+              } />
+              <Route path="/landingsection" element={
+                <ProtectedRoute>
+                  <LandingSection />
                 </ProtectedRoute>
               } />
               
