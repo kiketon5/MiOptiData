@@ -22,6 +22,7 @@ import ProfileSettings from './components/Auth/ProfileSettings';
 import LandingSection from './components/FrontPage/Inicio';
 import LegalPage from './components/FrontPage/Legal';
 import PrivacyPage from './components/FrontPage/Privacy';
+import MainLayout from './components/FrontPage/MainLayout';
 
 function App() {
   return (
@@ -32,12 +33,14 @@ function App() {
           <main className="container mx-auto px-4 py-8">
             <Routes>
               {/* Public Routes */}
-              <Route path="/" element={<LandingSection />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/auth/callback" element={<AuthCallback />} />
-              <Route path="/legal" element={<LegalPage />} />
-              <Route path="/privacy" element={<PrivacyPage />} />
+              <Route path="/" element={<MainLayout />}>
+                {/* Hijos de MainLayout */}
+                <Route index element={<LandingSection />} />       {/* "/" → LandingPage */}
+                <Route path="login" element={<Login />} /> {/* "/login" → LoginPage */}
+                <Route path="register" element={<Register />} /> {/* "/register" → RegisterPage */}
+                <Route path="legal" element={<LegalPage />} />  {/* "/legal" → LegalPage */}
+                <Route path="privacy" element={<PrivacyPage />} /> {/* "/privacy" → PrivacyPage */}
+              </Route>
 
               {/* Protected Routes under /dashboard */}
               <Route
