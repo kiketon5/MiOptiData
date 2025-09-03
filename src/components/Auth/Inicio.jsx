@@ -1,5 +1,4 @@
 import React from "react";
-import { FileText, Lock, Globe } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const LandingSection = () => {
@@ -24,7 +23,7 @@ const LandingSection = () => {
       {/* Features */}
       <section className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center px-6 py-12">
         <div>
-          <FileText className="w-10 h-10 text-blue-700 mx-auto mb-3" />
+          <span className="text-4xl mx-auto mb-3 block">📄</span>
           <h3 className="text-lg font-semibold text-gray-900">Historial completo</h3>
           <p className="text-gray-600 mt-2">
             Guarda tus recetas y evolución visual fácilmente
@@ -32,7 +31,7 @@ const LandingSection = () => {
         </div>
 
         <div>
-          <Lock className="w-10 h-10 text-blue-700 mx-auto mb-3" />
+          <span className="text-4xl mx-auto mb-3 block">🔒</span>
           <h3 className="text-lg font-semibold text-gray-900">Seguridad garantizada</h3>
           <p className="text-gray-600 mt-2">
             Solo tú puedes ver tus datos
@@ -40,7 +39,7 @@ const LandingSection = () => {
         </div>
 
         <div>
-          <Globe className="w-10 h-10 text-blue-700 mx-auto mb-3" />
+          <span className="text-4xl mx-auto mb-3 block">🌍</span>
           <h3 className="text-lg font-semibold text-gray-900">Accede desde cualquier lugar</h3>
           <p className="text-gray-600 mt-2">
             Compatible con móvil, tablet o PC
