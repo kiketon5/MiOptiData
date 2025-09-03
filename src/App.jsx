@@ -2,37 +2,23 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import Navbar from './components/Layout/Navbar';
-
-// Auth
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
 import AuthCallback from './components/Auth/AuthCallback';
-import ProfileSettings from './components/Auth/ProfileSettings';
-
-// Dashboard / Protected
-import Dashboard from './components/Dashboard';
-import ProtectedRoute from './components/Auth/ProtectedRoute';
-
-// Profiles
+import Dashboard from './components/Dashboard/Dashboard';
 import ProfileList from './components/Profile/ProfileList';
 import ProfileForm from './components/Profile/ProfileForm';
-
-// Reminders
 import RemindersList from './components/Reminders/RemindersList';
 import ReminderForm from './components/Reminders/ReminderForm';
-
-// Metrics / Eye Tests
 import PrescriptionForm from './components/Metrics/PrescriptionForm';
 import PrescriptionHistory from './components/Metrics/PrescriptionHistory';
 import VisualAcuityTest from './components/Metrics/VisualAcuityTest';
 import SymptomsTracker from './components/Metrics/SymptomsTracker';
-import EyePressureForm from './components/Metrics/PressureTracker';
 import MetricsCharts from './components/Metrics/MetricsCharts';
-
-// Sharing
+import ProtectedRoute from './components/Auth/ProtectedRoute';
+import EyePressureForm from './components/Metrics/PressureTracker';
 import PDFExport from './components/Sharing/PDFExport';
-
-// Landing / Legal
+import ProfileSettings from './components/Auth/ProfileSettings';
 import LandingSection from './components/FrontPage/Inicio';
 import LegalPage from './components/FrontPage/Legal';
 import PrivacyPage from './components/FrontPage/Privacy';
