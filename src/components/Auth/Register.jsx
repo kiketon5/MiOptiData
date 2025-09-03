@@ -150,10 +150,10 @@ const Register = () => {
 
       {/* Google Registration Button */}
         <div className="max-w-md mx-auto bg-white rounded-lg shadow-md overflow-hidden p-6 mt-10">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-blue-600">MiOptiData</h1>
-            <h2 className="text-xl font-semibold mt-2">Create an Account</h2>
-          </div>
+          <h1 className="text-3xl font-bold text-blue-600 mb-4">Mi OptiData</h1>
+          <p className="text-gray-600 mb-6">
+            Accede con tu cuenta de Google de forma rápida y segura
+          </p>
           <div className="mt-6">
             <button
               type="button"
