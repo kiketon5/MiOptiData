@@ -189,17 +189,13 @@ function App() {
               <Route
                 path="/privacy"
                 element={
-                  <ProtectedRoute>
                     <PrivacyPage />
-                  </ProtectedRoute>
                 }
               />
               <Route
                 path="/legal"
                 element={
-                  <ProtectedRoute>
                     <LegalPage />
-                  </ProtectedRoute>
                 }
               />
 
