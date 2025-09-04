@@ -3,7 +3,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 const Navbar = () => {
-  const { user, logout } = useAuth();
+  const { user, logout, setShowLogin } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const navigate = useNavigate();
@@ -31,6 +31,7 @@ const Navbar = () => {
   
   const closeMenus = () => {
     setIsMenuOpen(false);
+    setShowLogin(true)
     setIsProfileMenuOpen(false);
   };
 
@@ -135,13 +136,15 @@ const Navbar = () => {
             ) : (
               <div className="hidden md:flex md:items-center md:space-x-2">
                 <Link 
-                  to="/login" 
+                  to="/login"
+                  onClick={() => setShowLogin(true)} 
                   className="text-gray-600 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium"
                 >
                   Sign in
                 </Link>
                 <Link 
-                  to="/register" 
+                  to="/register"
+                  onClick={() => setShowLogin(true)} 
                   className="bg-blue-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-700"
                 >
                   Sign up

@@ -350,13 +350,13 @@ const VisualAcuityTest = () => {
                       placeholder="e.g., 20/20"
                       className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
-                    <button
+                    {/* <button
                       type="button"
                       onClick={() => startTest('od')}
                       className="px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
                     >
                       Test
-                    </button>
+                    </button> */}
                   </div>
                 </div>
 
@@ -373,13 +373,13 @@ const VisualAcuityTest = () => {
                       placeholder="e.g., 20/20"
                       className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
-                    <button
+                    {/* <button
                       type="button"
                       onClick={() => startTest('os')}
                       className="px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
                     >
                       Test
-                    </button>
+                    </button> */}
                   </div>
                 </div>
 
@@ -396,13 +396,13 @@ const VisualAcuityTest = () => {
                       placeholder="e.g., 20/20"
                       className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
-                    <button
+                    {/* <button
                       type="button"
                       onClick={() => startTest('binocular')}
                       className="px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
                     >
                       Test
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </div>
