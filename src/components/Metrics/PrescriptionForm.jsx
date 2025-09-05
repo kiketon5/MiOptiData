@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { supabase } from '../../lib/supabase';
+import { InfoTooltip } from '../Utils/InfoTooltip';
 
 const PrescriptionForm = () => {
   const { user } = useAuth();
@@ -297,12 +298,12 @@ const PrescriptionForm = () => {
             {/* Headers */}
             <div className="grid grid-cols-7 gap-2 text-sm font-medium text-gray-700">
               <div></div>
-              <div className="text-center">Sphere (SPH)</div>
-              <div className="text-center">Cylinder (CYL)</div>
-              <div className="text-center">Axis</div>
-              <div className="text-center">Add</div>
-              <div className="text-center">Prism</div>
-              <div className="text-center">Base</div>
+              <div className="text-center">Sphere (SPH) <InfoTooltip text="Lens power for nearsightedness or farsightedness." /></div>
+              <div className="text-center">Cylinder (CYL) <InfoTooltip text="Lens power for astigmatism correction." /></div>
+              <div className="text-center">Axis <InfoTooltip text="Orientation of astigmatism correction (degrees 0–180)." /></div>
+              <div className="text-center">Add <InfoTooltip text="Additional lens power for reading (presbyopia)." /></div>
+              <div className="text-center">Prism <InfoTooltip text="Lens power to correct eye alignment issues." /></div>
+              <div className="text-center">Base <InfoTooltip text="Direction of prism (up, down, in, out)." /></div>
             </div>
 
             {/* Right Eye (OD) */}
