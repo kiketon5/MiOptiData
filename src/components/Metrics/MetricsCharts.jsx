@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { supabase } from "../../lib/supabase";
 import { Edit, Trash2 } from "lucide-react";
+import { InfoTooltip } from "../Utils/InfoTooltip";
 
 const MetricsCharts = () => {
   const { user } = useAuth();
@@ -367,16 +368,23 @@ const MetricsCharts = () => {
                           Date
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          OD Sphere
+                          OD Sphere{" "}
+                          <InfoTooltip text="OD Sphere: Right eye spherical power" />
                         </th>
+
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          OD Cylinder
+                          OD Cylinder{" "}
+                          <InfoTooltip text="OD Cylinder: Right eye astigmatism value" />
                         </th>
+
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          OS Sphere
+                          OS Sphere{" "}
+                          <InfoTooltip text="OS Sphere: Left eye spherical power" />
                         </th>
+
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                          OS Cylinder
+                          OS Cylinder{" "}
+                          <InfoTooltip text="OS Cylinder: Left eye astigmatism value" />
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Doctor
@@ -704,21 +712,21 @@ const MetricsCharts = () => {
                               {symptom.trigger_activity || "-"}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-3 flex items-center justify-end">
-                            <Link
-                              to={`/profiles/${profileId}/symptoms/${symptom.id}/edit`}
-                              className="text-blue-600 hover:text-blue-900"
-                              title="Edit"
-                            >
-                              <Edit size={18} />
-                            </Link>
-                            <button
-                              onClick={() => handleDeleteSymptoms(symptom.id)}
-                              className="text-red-600 hover:text-red-900"
-                              title="Delete"
-                            >
-                              <Trash2 size={18} />
-                            </button>
-                          </td>
+                              <Link
+                                to={`/profiles/${profileId}/symptoms/${symptom.id}/edit`}
+                                className="text-blue-600 hover:text-blue-900"
+                                title="Edit"
+                              >
+                                <Edit size={18} />
+                              </Link>
+                              <button
+                                onClick={() => handleDeleteSymptoms(symptom.id)}
+                                className="text-red-600 hover:text-red-900"
+                                title="Delete"
+                              >
+                                <Trash2 size={18} />
+                              </button>
+                            </td>
                           </tr>
                         ))}
                     </tbody>
@@ -879,7 +887,9 @@ const MetricsCharts = () => {
                               <Edit size={18} />
                             </Link>
                             <button
-                              onClick={() => handleDeleteEyePressure(measurement.id)}
+                              onClick={() =>
+                                handleDeleteEyePressure(measurement.id)
+                              }
                               className="text-red-600 hover:text-red-900"
                               title="Delete"
                             >
