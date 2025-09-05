@@ -197,8 +197,24 @@ const ProfileForm = () => {
         </div>
 
         {/* Tab Navigation */}
-        <div className="border-b border-gray-200">
-          <nav className="flex space-x-8 px-6" aria-label="Tabs">
+        <div className="border-b border-gray-200 px-6 py-2">
+          {/* Dropdown para móviles */}
+          <div className="md:hidden">
+            <select
+              value={activeTab}
+              onChange={(e) => setActiveTab(e.target.value)}
+              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              {tabs.map((tab) => (
+                <option key={tab.id} value={tab.id}>
+                  {tab.label}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Botones para escritorio */}
+          <nav className="hidden md:flex space-x-8" aria-label="Tabs">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
@@ -366,21 +382,22 @@ const ProfileForm = () => {
                   </button>
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  {Array.isArray(formData.allergies) && formData.allergies.map((allergy, index) => (
-                    <span
-                      key={index}
-                      className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-red-100 text-red-800"
-                    >
-                      {allergy}
-                      <button
-                        type="button"
-                        onClick={() => removeArrayItem("allergies", index)}
-                        className="ml-2 text-red-600 hover:text-red-800"
+                  {Array.isArray(formData.allergies) &&
+                    formData.allergies.map((allergy, index) => (
+                      <span
+                        key={index}
+                        className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-red-100 text-red-800"
                       >
-                        ×
-                      </button>
-                    </span>
-                  ))}
+                        {allergy}
+                        <button
+                          type="button"
+                          onClick={() => removeArrayItem("allergies", index)}
+                          className="ml-2 text-red-600 hover:text-red-800"
+                        >
+                          ×
+                        </button>
+                      </span>
+                    ))}
                 </div>
               </div>
 
