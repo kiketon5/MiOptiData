@@ -120,7 +120,7 @@ function App() {
                   <EyePressureForm />
                 </ProtectedRoute>
               } />
-              <Route path="/profiles/:profileId/eye-pressure/:eye-pressure/edit" element={
+              <Route path="/profiles/:profileId/eye-pressure/:recordId/edit" element={
                 <ProtectedRoute>
                   <EyePressureForm />
                 </ProtectedRoute>
