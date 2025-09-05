@@ -120,6 +120,11 @@ function App() {
                   <EyePressureForm />
                 </ProtectedRoute>
               } />
+              <Route path="/profiles/:profileId/eye-pressure/:eye-pressure/edit" element={
+                <ProtectedRoute>
+                  <EyePressureForm />
+                </ProtectedRoute>
+              } />
               <Route path="/profiles/:profileId/metrics" element={
                 <ProtectedRoute>
                   <MetricsCharts />

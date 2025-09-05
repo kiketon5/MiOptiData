@@ -38,6 +38,57 @@ const MetricsCharts = () => {
       }
     }
   };
+  const handleDeleteVisual = async (testId) => {
+    if (window.confirm("Are you sure you want to delete this prescription?")) {
+      try {
+        const { error } = await supabase
+          .from("app_061iy_visual_tests")
+          .delete()
+          .eq("id", testId)
+          .eq("user_id", user.id);
+
+        if (error) throw error;
+        setPrescriptions((prev) => prev.filter((p) => p.id !== testId));
+      } catch (error) {
+        console.error("Error deleting prescription:", error);
+        alert("Failed to delete prescription. Please try again.");
+      }
+    }
+  };
+  const handleDeleteSymptoms = async (symtomId) => {
+    if (window.confirm("Are you sure you want to delete this prescription?")) {
+      try {
+        const { error } = await supabase
+          .from("app_061iy_symptoms")
+          .delete()
+          .eq("id", symtomId)
+          .eq("user_id", user.id);
+
+        if (error) throw error;
+        setPrescriptions((prev) => prev.filter((p) => p.id !== symtomId));
+      } catch (error) {
+        console.error("Error deleting prescription:", error);
+        alert("Failed to delete prescription. Please try again.");
+      }
+    }
+  };
+  const handleDeleteEyePressure = async (measurementId) => {
+    if (window.confirm("Are you sure you want to delete this prescription?")) {
+      try {
+        const { error } = await supabase
+          .from("app_061iy_pressure_measurements")
+          .delete()
+          .eq("id", measurementId)
+          .eq("user_id", user.id);
+
+        if (error) throw error;
+        setPrescriptions((prev) => prev.filter((p) => p.id !== measurementId));
+      } catch (error) {
+        console.error("Error deleting prescription:", error);
+        alert("Failed to delete prescription. Please try again.");
+      }
+    }
+  };
 
   const loadAllData = async () => {
     try {
@@ -452,6 +503,9 @@ const MetricsCharts = () => {
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           With Correction
                         </th>
+                        <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Actions
+                        </th>
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
@@ -474,6 +528,22 @@ const MetricsCharts = () => {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                             {test.with_correction ? "Yes" : "No"}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-3 flex items-center justify-end">
+                            <Link
+                              to={`/profiles/${profileId}/visual-test/${test.id}/edit`}
+                              className="text-blue-600 hover:text-blue-900"
+                              title="Edit"
+                            >
+                              <Edit size={18} />
+                            </Link>
+                            <button
+                              onClick={() => handleDeleteVisual(test.id)}
+                              className="text-red-600 hover:text-red-900"
+                              title="Delete"
+                            >
+                              <Trash2 size={18} />
+                            </button>
                           </td>
                         </tr>
                       ))}
@@ -593,6 +663,9 @@ const MetricsCharts = () => {
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Trigger
                         </th>
+                        <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Actions
+                        </th>
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
@@ -630,6 +703,22 @@ const MetricsCharts = () => {
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                               {symptom.trigger_activity || "-"}
                             </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-3 flex items-center justify-end">
+                            <Link
+                              to={`/profiles/${profileId}/symptoms/${symptom.id}/edit`}
+                              className="text-blue-600 hover:text-blue-900"
+                              title="Edit"
+                            >
+                              <Edit size={18} />
+                            </Link>
+                            <button
+                              onClick={() => handleDeleteSymptoms(symptom.id)}
+                              className="text-red-600 hover:text-red-900"
+                              title="Delete"
+                            >
+                              <Trash2 size={18} />
+                            </button>
+                          </td>
                           </tr>
                         ))}
                     </tbody>
@@ -731,6 +820,9 @@ const MetricsCharts = () => {
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Measured By
                         </th>
+                        <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Actions
+                        </th>
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
@@ -777,6 +869,22 @@ const MetricsCharts = () => {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                             {measurement.measured_by || "-"}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-3 flex items-center justify-end">
+                            <Link
+                              to={`/profiles/${profileId}/eye-pressure/${measurement.id}/edit`}
+                              className="text-blue-600 hover:text-blue-900"
+                              title="Edit"
+                            >
+                              <Edit size={18} />
+                            </Link>
+                            <button
+                              onClick={() => handleDeleteEyePressure(measurement.id)}
+                              className="text-red-600 hover:text-red-900"
+                              title="Delete"
+                            >
+                              <Trash2 size={18} />
+                            </button>
                           </td>
                         </tr>
                       ))}
