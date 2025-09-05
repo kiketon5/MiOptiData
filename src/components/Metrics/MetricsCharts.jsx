@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { supabase } from "../../lib/supabase";
+import { Edit, Trash2 } from "lucide-react";
 
 const MetricsCharts = () => {
   const { user } = useAuth();
@@ -19,6 +20,28 @@ const MetricsCharts = () => {
       loadAllData();
     }
   }, [user, profileId]);
+
+  const handleDelete = async (prescriptionId) => {
+        if (
+          window.confirm("Are you sure you want to delete this prescription?")
+        ) {
+          try {
+            const { error } = await supabase
+              .from("app_061iy_prescriptions")
+              .delete()
+              .eq("id", prescriptionId)
+              .eq("user_id", user.id);
+
+            if (error) throw error;
+            setPrescriptions((prev) =>
+              prev.filter((p) => p.id !== prescriptionId)
+            );
+          } catch (error) {
+            console.error("Error deleting prescription:", error);
+            alert("Failed to delete prescription. Please try again.");
+          }
+        }
+      };
 
   const loadAllData = async () => {
     try {
@@ -311,6 +334,9 @@ const MetricsCharts = () => {
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Doctor
                         </th>
+                        <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          Actions
+                        </th>
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
@@ -333,6 +359,23 @@ const MetricsCharts = () => {
                           </td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                             {prescription.doctor_name || "-"}
+                          </td>
+                          {/* Botones con iconos */}
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-3">
+                            <Link
+                              to={`/profiles/${profileId}/prescriptions/${prescription.id}/edit`}
+                              className="text-blue-600 hover:text-blue-900"
+                              title="Edit"
+                            >
+                              <Edit size={18} />
+                            </Link>
+                            <button
+                              onClick={() => handleDelete(prescription.id)}
+                              className="text-red-600 hover:text-red-900"
+                              title="Delete"
+                            >
+                              <Trash2 size={18} />
+                            </button>
                           </td>
                         </tr>
                       ))}
