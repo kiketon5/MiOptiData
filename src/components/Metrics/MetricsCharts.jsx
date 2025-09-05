@@ -498,18 +498,23 @@ const MetricsCharts = () => {
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Test Type
+                          <InfoTooltip text="Type of eye exam performed." />
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           OD Result
+                          <InfoTooltip text="Right eye (OD) measurement." />
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           OS Result
+                          <InfoTooltip text="Left eye (OS) measurement." />
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Both Eyes
+                          <InfoTooltip text="Measurements for both eyes." />
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           With Correction
+                          <InfoTooltip text="Results with glasses or contacts." />
                         </th>
                         <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Actions
@@ -661,15 +666,19 @@ const MetricsCharts = () => {
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Symptom
+                          <InfoTooltip text="Type of eye-related symptom." />
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Severity
+                          <InfoTooltip text="How intense the symptom is (1–10)." />
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Duration
+                          <InfoTooltip text="How long the symptom lasts." />
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Trigger
+                          <InfoTooltip text="Activity or factor that caused the symptom." />
                         </th>
                         <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Actions
@@ -818,12 +827,15 @@ const MetricsCharts = () => {
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           OD Pressure
+                        <InfoTooltip text="Intraocular pressure of the right eye (mmHg)." />
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           OS Pressure
+                        <InfoTooltip text="Intraocular pressure of the left eye (mmHg)." />
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Method
+                        <InfoTooltip text="Technique used to measure eye pressure (e.g., Tonometry)." />
                         </th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                           Measured By
