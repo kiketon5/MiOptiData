@@ -339,7 +339,7 @@ const VisualAcuityTest = () => {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Right Eye (OD)
+                    Right Eye (OD) 
                   </label>
                   <div className="flex space-x-2">
                     <input
