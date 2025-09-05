@@ -22,26 +22,22 @@ const MetricsCharts = () => {
   }, [user, profileId]);
 
   const handleDelete = async (prescriptionId) => {
-        if (
-          window.confirm("Are you sure you want to delete this prescription?")
-        ) {
-          try {
-            const { error } = await supabase
-              .from("app_061iy_prescriptions")
-              .delete()
-              .eq("id", prescriptionId)
-              .eq("user_id", user.id);
+    if (window.confirm("Are you sure you want to delete this prescription?")) {
+      try {
+        const { error } = await supabase
+          .from("app_061iy_prescriptions")
+          .delete()
+          .eq("id", prescriptionId)
+          .eq("user_id", user.id);
 
-            if (error) throw error;
-            setPrescriptions((prev) =>
-              prev.filter((p) => p.id !== prescriptionId)
-            );
-          } catch (error) {
-            console.error("Error deleting prescription:", error);
-            alert("Failed to delete prescription. Please try again.");
-          }
-        }
-      };
+        if (error) throw error;
+        setPrescriptions((prev) => prev.filter((p) => p.id !== prescriptionId));
+      } catch (error) {
+        console.error("Error deleting prescription:", error);
+        alert("Failed to delete prescription. Please try again.");
+      }
+    }
+  };
 
   const loadAllData = async () => {
     try {
@@ -360,8 +356,7 @@ const MetricsCharts = () => {
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                             {prescription.doctor_name || "-"}
                           </td>
-                          {/* Botones con iconos */}
-                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-3">
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-3 flex items-center justify-end">
                             <Link
                               to={`/profiles/${profileId}/prescriptions/${prescription.id}/edit`}
                               className="text-blue-600 hover:text-blue-900"
