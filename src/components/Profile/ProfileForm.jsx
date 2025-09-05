@@ -198,8 +198,8 @@ const ProfileForm = () => {
 
         {/* Tab Navigation */}
         <div className="border-b border-gray-200 px-6 py-2">
-          {/* Dropdown para móviles */}
-          <div className="md:hidden">
+          {/* Dropdown para móviles y tablets */}
+          <div className="lg:hidden">
             <select
               value={activeTab}
               onChange={(e) => setActiveTab(e.target.value)}
@@ -207,14 +207,14 @@ const ProfileForm = () => {
             >
               {tabs.map((tab) => (
                 <option key={tab.id} value={tab.id}>
-                  {tab.label}
+                  {tab.icon} {tab.label}
                 </option>
               ))}
             </select>
           </div>
 
-          {/* Botones para escritorio */}
-          <nav className="hidden md:flex space-x-8" aria-label="Tabs">
+          {/* Botones para pantallas grandes */}
+          <nav className="hidden lg:flex space-x-8" aria-label="Tabs">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
