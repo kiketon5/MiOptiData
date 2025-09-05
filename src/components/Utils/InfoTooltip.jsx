@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Info } from "lucide-react";
 
-const InfoTooltip = ({ text }) => {
+export const InfoTooltip = ({ text }) => {
   const [visible, setVisible] = useState(false);
   const [position, setPosition] = useState({ top: 0, left: "50%", transform: "-50%" });
   const iconRef = useRef();
@@ -83,5 +83,3 @@ const InfoTooltip = ({ text }) => {
     </span>
   );
 };
-
-export default InfoTooltip;
