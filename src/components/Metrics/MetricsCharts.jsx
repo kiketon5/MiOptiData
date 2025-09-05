@@ -39,7 +39,7 @@ const MetricsCharts = () => {
     }
   };
   const handleDeleteVisual = async (testId) => {
-    if (window.confirm("Are you sure you want to delete this prescription?")) {
+    if (window.confirm("Are you sure you want to delete this visual acuity?")) {
       try {
         const { error } = await supabase
           .from("app_061iy_visual_tests")
@@ -56,7 +56,7 @@ const MetricsCharts = () => {
     }
   };
   const handleDeleteSymptoms = async (symtomId) => {
-    if (window.confirm("Are you sure you want to delete this prescription?")) {
+    if (window.confirm("Are you sure you want to delete this symptoms?")) {
       try {
         const { error } = await supabase
           .from("app_061iy_symptoms")
@@ -73,7 +73,7 @@ const MetricsCharts = () => {
     }
   };
   const handleDeleteEyePressure = async (measurementId) => {
-    if (window.confirm("Are you sure you want to delete this prescription?")) {
+    if (window.confirm("Are you sure you want to delete this eye pressure?")) {
       try {
         const { error } = await supabase
           .from("app_061iy_pressure_measurements")
