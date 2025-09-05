@@ -122,12 +122,12 @@ const Dashboard = () => {
   return (
     <div className="flex flex-col lg:flex-row gap-4">
       {/* Left Ad */}
-      <div className="hidden lg:block w-64 flex-shrink-0 sticky top-4">
+      {/* <div className="hidden lg:block w-64 flex-shrink-0 sticky top-4">
         {" "}
         <div className="bg-gray-100 p-4 rounded-lg shadow-md text-center">
           <meta name="google-adsense-account" content="ca-pub-7859779168014652"/>
         </div>
-      </div>
+      </div> */}
       <div className="flex-1 space-y-8">
         {/* Welcome Section */}
         <div className="bg-gradient-to-r from-blue-500 to-blue-700 text-white p-6 rounded-lg shadow-md">
